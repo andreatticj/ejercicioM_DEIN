@@ -8,15 +8,16 @@ public class Propiedades {
 
     static {
         // Carga el archivo de propiedades desde el classpath
-        try (InputStream input = Propiedades.class.getResourceAsStream("/eu/andreatt/ejercicioi_dein/configuration.properties")) {
+        try (InputStream input = Propiedades.class.getResourceAsStream("/eu/andreatt/ejerciciol_dein/configuration.properties")) {
             if (input == null) {
                 throw new RuntimeException("No se encontró el archivo configuration.properties en el classpath.");
             }
             props.load(input);
         } catch (Exception e) {
-            throw new RuntimeException("Error al cargar el archivo de propiedades: " + e.getMessage(), e);
+            e.printStackTrace();  // Imprime la pila de la excepción para depuración
         }
     }
+
 
     /**
      * Obtiene el valor asociado a una clave desde el archivo de propiedades situado en el classpath.
@@ -28,8 +29,9 @@ public class Propiedades {
     public static String getValor(String clave) {
         String valor = props.getProperty(clave);
         if (valor != null) {
+
             return valor;
-        }else {
+        }else {System.out.println("Claves disponibles en el archivo de propiedades: " + props.keySet());
             throw new RuntimeException("Clave '" + clave + "' no encontrada en el archivo de propiedades.");
         }
     }

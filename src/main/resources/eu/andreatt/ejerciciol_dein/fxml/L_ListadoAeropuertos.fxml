@@ -16,8 +16,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<GridPane prefHeight="548.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.andreatt.ejerciciol_dein.controllers.L_ListadoAeropuertosController">
+<GridPane prefHeight="548.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.andreatt.ejerciciol_dein.controllers.L_ListadoAeropuertosController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -41,7 +40,7 @@
          <children>
             <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <RadioButton fx:id="rbPublicos" mnemonicParsing="false" onAction="#actPublicos" text="Publicos">
+                  <RadioButton fx:id="rbPublicos" mnemonicParsing="false" onAction="#actPublicos" selected="true" text="Publicos">
                      <toggleGroup>
                         <ToggleGroup fx:id="rbGroup" />
                      </toggleGroup>
@@ -99,7 +98,7 @@
            </columnResizePolicy>
        </TableView>
 
-       <TableView fx:id="tvAeropuertosPublicos" visible="false" GridPane.rowIndex="1">
+       <TableView fx:id="tvAeropuertosPublicos" GridPane.rowIndex="1">
            <columns>
                <TableColumn fx:id="colIDPublico" prefWidth="75.0" text="ID" />
                <TableColumn fx:id="colNombrePublico" prefWidth="75.0" text="Nombre" />

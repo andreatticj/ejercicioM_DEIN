@@ -4,7 +4,6 @@ import eu.andreatt.ejerciciol_dein.application.L_AddAeropuerto;
 import eu.andreatt.ejerciciol_dein.application.L_AddAvion;
 import eu.andreatt.ejerciciol_dein.application.L_BorrarAvion;
 import eu.andreatt.ejerciciol_dein.dao.*;
-import eu.andreatt.ejerciciol_dein.model.AeropuertosPublicos;
 import eu.andreatt.ejerciciol_dein.model.InformacionAeropuertosPrivados;
 import eu.andreatt.ejerciciol_dein.model.InformacionAeropuertosPublicos;
 import javafx.collections.FXCollections;
@@ -119,7 +118,7 @@ public class L_ListadoAeropuertosController {
     private TableView<InformacionAeropuertosPrivados> tvAeropuertosPrivados;
 
     @FXML
-    private TableView<AeropuertosPublicos> tvAeropuertosPublicos;
+    private TableView<InformacionAeropuertosPublicos> tvAeropuertosPublicos;
 
     @FXML
     private TextField txtFiltrar;
@@ -164,7 +163,7 @@ public class L_ListadoAeropuertosController {
 
     @FXML
     void borrarAeropuerto(ActionEvent event) {
-        // Acción para borrar un aeropuerto
+
     }
 
     @FXML
@@ -196,8 +195,8 @@ public class L_ListadoAeropuertosController {
         aeropuertosPrivadosExistentes = FXCollections.observableArrayList();
         aeropuertosPublicosExistentes = FXCollections.observableArrayList();
 
-        aeropuertosPrivadosExistentes = aeropuertosPrivadosDao.cargarAeropuertosPrivados();
-        aeropuertosPublicosExistentes = aeropuertosPublicosDao.cargarAeropuertosPublicos();
+        aeropuertosPrivadosExistentes.setAll(aeropuertosPrivadosDao.cargarAeropuertosPrivados());
+        aeropuertosPublicosExistentes.setAll(aeropuertosPublicosDao.cargarAeropuertosPublicos());
 
         // Configuración de las columnas de la tabla de aeropuertos públicos
         colIDPublico.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -223,5 +222,6 @@ public class L_ListadoAeropuertosController {
         colAnioPrivado.setCellValueFactory(new PropertyValueFactory<>("anioInauguracion"));
 
         tvAeropuertosPrivados.setItems(aeropuertosPrivadosExistentes);
+        tvAeropuertosPublicos.setItems(aeropuertosPublicosExistentes);
     }
 }
