@@ -154,6 +154,7 @@ public class L_ListadoAeropuertosController {
     @FXML
     void aniadirAeropuerto(ActionEvent event) {
         new L_AddAeropuerto();
+
     }
 
     @FXML
@@ -173,12 +174,12 @@ public class L_ListadoAeropuertosController {
 
     @FXML
     void editarAeropuerto(ActionEvent event) {
-        // Acción para editar un aeropuerto
+
     }
 
     @FXML
     void mostrarAeropuerto(ActionEvent event) {
-        // Acción para mostrar detalles de un aeropuerto
+
     }
 
     @FXML
