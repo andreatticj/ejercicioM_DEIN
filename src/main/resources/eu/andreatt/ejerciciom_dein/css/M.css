@@ -1,0 +1,68 @@
+/* Fondos y Imágenes */
+.fondoImagen {
+    -fx-background-image: url('../images/fondoM.jpg');
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+}
+
+/* Botones */
+.button {
+    -fx-background-color: green;
+}
+
+#btnCancelar {
+    -fx-background-color: red;
+}
+
+/* Texto y Tipografía */
+.label, .radio-button, .button, .table-cell {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+/* Cuadros de Selección */
+.combo-box {
+    -fx-control-inner-background: #ff9842;
+    -fx-text-fill: white;
+}
+
+/* Barras de Menú y Contexto */
+.menu-bar, .context-menu {
+    -fx-background-color: #ff9842;
+}
+
+.menu-bar .menu-item {
+    -fx-background-color:  #e57517;
+}
+
+.menu-bar .menu-item:hover {
+    -fx-background-color:  #f2984d;
+}
+
+/* Tablas y Filas */
+.table-view {
+    -fx-control-inner-background: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: #ff9842;
+    -fx-border-color: transparent #ff9842 transparent transparent;
+}
+
+.table-row-cell .table-cell {
+    -fx-border-color: transparent transparent #bc4ed8 transparent;
+}
+
+.table-row-cell:selected {
+    -fx-background-color:  #e57517;
+}
+
+/* Estilos Específicos */
+.colorError {
+    -fx-text-fill: #ff9842;
+}
+
+/* Radios */
+.radio-button:selected .radio {
+    -fx-mark-color: #ff9842;
+}

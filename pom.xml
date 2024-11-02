@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eu.andreatt</groupId>
-    <artifactId>ejercicioL_DEIN</artifactId>
+    <artifactId>ejercicioM_DEIN</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>ejercicioL_DEIN</name>
+    <name>ejercicioM_DEIN</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -85,7 +85,7 @@
                 <!-- Default configuration for running with: mvn clean javafx:run -->
                 <id>default-cli</id>
                 <configuration>
-                    <mainClass>eu.andreatt.ejerciciol_dein/eu.andreatt.ejerciciol_dein.application.L_ListadoAeropuertos
+                    <mainClass>eu.andreatt.ejerciciom_dein/eu.andreatt.ejerciciom_dein.application.M_ListadoAeropuertos
                     </mainClass>
                     <launcher>app</launcher>
                     <jlinkZipName>app</jlinkZipName>
