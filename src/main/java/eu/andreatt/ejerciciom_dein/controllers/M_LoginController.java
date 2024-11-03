@@ -11,6 +11,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Controlador para la ventana de inicio de sesión.
+ * Gestiona la autenticación de los usuarios mediante su nombre de usuario y contraseña.
+ */
 public class M_LoginController {
 
     @FXML
@@ -22,13 +26,20 @@ public class M_LoginController {
     @FXML
     private TextField txtUser;
 
-
+    /**
+     * Inicializa el controlador.
+     * Se establece el botón de login como el botón por defecto al iniciar la ventana.
+     */
     @FXML
     void initialize() {
-        // Establecer el botón de login como el botón por defecto
         btnLogin.setDefaultButton(true);
     }
 
+    /**
+     * Maneja el evento de inicio de sesión al pulsar el botón de login.
+     *
+     * @param event Evento generado al pulsar el botón de login.
+     */
     @FXML
     void login(ActionEvent event) {
         // Obtener los valores ingresados
@@ -59,6 +70,12 @@ public class M_LoginController {
         }
     }
 
+    /**
+     * Muestra una alerta con un mensaje específico.
+     *
+     * @param mensaje Mensaje a mostrar en la alerta.
+     * @param tipo Tipo de alerta (advertencia, error, etc.).
+     */
     private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setHeaderText(null);

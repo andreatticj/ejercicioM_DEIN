@@ -20,6 +20,9 @@ import java.nio.file.Files;
 import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
 
+/**
+ * Controlador para la ventana de añadir un aeropuerto.
+ */
 public class M_AddAeropuertoController {
 
     @FXML
@@ -86,6 +89,11 @@ public class M_AddAeropuertoController {
 
     private String ruta;
 
+    /**
+     * Maneja el evento de selección del botón de aeropuerto privado.
+     * Muestra los campos de número de socios y oculta los de financiación y número de trabajadores.
+     * @param event El evento de acción.
+     */
     @FXML
     void actPrivado(ActionEvent event) {
         lblSocios.setVisible(true);
@@ -96,6 +104,11 @@ public class M_AddAeropuertoController {
         txtNumTrabajadores.setVisible(false);
     }
 
+    /**
+     * Maneja el evento de selección del botón de aeropuerto público.
+     * Muestra los campos de financiación y número de trabajadores, y oculta el campo de número de socios.
+     * @param event El evento de acción.
+     */
     @FXML
     void actPublico(ActionEvent event) {
         lblSocios.setVisible(false);
@@ -106,12 +119,21 @@ public class M_AddAeropuertoController {
         txtNumTrabajadores.setVisible(true);
     }
 
+    /**
+     * Maneja el evento de cancelación y cierra la ventana actual.
+     * @param event El evento de acción.
+     */
     @FXML
     void cancelar(ActionEvent event) {
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Maneja el evento de guardar la información del nuevo aeropuerto.
+     * Valida los campos, inserta la dirección y el aeropuerto, y muestra un mensaje de alerta.
+     * @param event El evento de acción.
+     */
     @FXML
     void guardar(ActionEvent event) {
         String errores = validarCampos();
@@ -166,6 +188,11 @@ public class M_AddAeropuertoController {
         stage.close();
     }
 
+    /**
+     * Maneja el evento de selección de imagen para el aeropuerto.
+     * Abre un diálogo de selección de archivos para elegir una imagen y valida su tamaño.
+     * @param event El evento de acción.
+     */
     @FXML
     void actionImagen(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -176,8 +203,7 @@ public class M_AddAeropuertoController {
 
         if (archivoSeleccionado != null) {
             try {
-                if (Files.siz
-                e(archivoSeleccionado.toPath()) > 65000) {
+                if (Files.size(archivoSeleccionado.toPath()) > 65000) {
                     Alert alerta = generarVentana(AlertType.ERROR, "Elige una imagen más pequeña", "ERROR");
                     alerta.show();
                 } else {
@@ -192,7 +218,10 @@ public class M_AddAeropuertoController {
         }
     }
 
-    /** VALIDAR DATOS INTRODUCIDOS */
+    /**
+     * Valida los datos introducidos en los campos de texto.
+     * @return Un string que contiene los errores de validación. Si no hay errores, retorna una cadena vacía.
+     */
     private String validarCampos() {
         StringBuilder errores = new StringBuilder();
 
@@ -234,42 +263,65 @@ public class M_AddAeropuertoController {
             } else if (!esNumeroEntero(txtNumTrabajadores.getText())) {
                 errores.append("El campo NÚMERO DE TRABAJADORES debe ser un número\n");
             }
-        } else if (rbPrivado.isSelected()) {
+        }
+        if (rbPrivado.isSelected()) {
             if (txtSocios.getText().isEmpty()) {
                 errores.append("El campo NÚMERO DE SOCIOS debe contener texto\n");
             } else if (!esNumeroEntero(txtSocios.getText())) {
                 errores.append("El campo NÚMERO DE SOCIOS debe ser un número\n");
             }
-        } else {
-            errores.append("Seleccione uno de los botones Público/Privado\n");
         }
-
         return errores.toString();
     }
 
-    /** VALIDAR SI ES UN NÚMERO ENTERO */
-    private static boolean esNumeroEntero(String valor) {
-        return valor.matches("-?\\d+");
-    }
-
-    /** VALIDAR SI ES UN NÚMERO DECIMAL */
-    private static boolean esNumeroDecimal(String valor) {
-        return valor.matches("-?\\d+(\\.\\d+)?");
-    }
-
-    /** GENERAR VENTANA DE ALERTA */
+    /**
+     * Crea y devuelve una alerta con el mensaje y título proporcionados.
+     * @param tipo El tipo de alerta.
+     * @param mensaje El mensaje que se mostrará en la alerta.
+     * @param titulo El título de la alerta.
+     * @return Un objeto Alert configurado.
+     */
     private Alert generarVentana(AlertType tipo, String mensaje, String titulo) {
-        Alert alert = new Alert(tipo);
-        alert.setHeaderText(titulo);
-        alert.setContentText(mensaje);
-        return alert;
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setContentText(mensaje);
+        return alerta;
     }
 
-    /** CONFIGURAR FILECHOOSER */
+    /**
+     * Configura el FileChooser para seleccionar archivos de imagen.
+     * @param fileChooser El FileChooser a configurar.
+     */
     private void configureFileChooser(FileChooser fileChooser) {
-        fileChooser.setTitle("Seleccionar imagen");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Archivos de Imagen", "*.png", "*.jpg", "*.jpeg")
-        );
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+        fileChooser.setTitle("Seleccione una imagen");
+    }
+
+    /**
+     * Verifica si la cadena proporcionada es un número entero.
+     * @param cadena La cadena a verificar.
+     * @return true si la cadena es un número entero; false en caso contrario.
+     */
+    private boolean esNumeroEntero(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Verifica si la cadena proporcionada es un número decimal.
+     * @param cadena La cadena a verificar.
+     * @return true si la cadena es un número decimal; false en caso contrario.
+     */
+    private boolean esNumeroDecimal(String cadena) {
+        try {
+            Float.parseFloat(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }

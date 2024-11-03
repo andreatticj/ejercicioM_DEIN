@@ -43,43 +43,56 @@ public class M_AddAvionController {
 
     private ObservableList<Aeropuertos> elementosCombo;
 
-
+    /**
+     * Maneja la acción de cancelar y cierra la ventana modal.
+     *
+     * @param event El evento de acción que dispara este método.
+     */
     @FXML
     void actCancelarAviones(ActionEvent event) {
-        //Cerrar ventana modal
+        // Cerrar ventana modal
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Maneja la acción de guardar los datos del avión.
+     * Valida los datos introducidos y si son correctos, los guarda en la base de datos.
+     * Muestra mensajes de alerta en caso de errores o éxito.
+     *
+     * @param event El evento de acción que dispara este método.
+     */
     @FXML
     void actGuardarAviones(ActionEvent event) {
         String errores = validarDatos();
 
-        if(errores.length()!=0) {
-            //Mensaje de alerta
+        if (errores.length() != 0) {
+            // Mensaje de alerta
             Alert alerta = generarVentana(Alert.AlertType.ERROR, errores, "ERROR");
             alerta.show();
 
-            //Cerrar ventana modal
+            // Cerrar ventana modal
             Stage stage = (Stage) btnCancelar.getScene().getWindow();
             stage.close();
-        }else {
-
-            //Validar que no existe el modelo en el aeropuerto
+        } else {
+            // Validar que no existe el modelo en el aeropuerto
             Aeropuertos aeropuertoSeleccionado = cmbAeropuerto.getSelectionModel().getSelectedItem();
-            int idAeropuerto = aeropuertosDao.dameIdDeAeropuerto(aeropuertoSeleccionado.getNombre(),aeropuertoSeleccionado.getAnioInauguracion(),aeropuertoSeleccionado.getCapacidad(), aeropuertoSeleccionado.getId_direccion());
+            int idAeropuerto = aeropuertosDao.dameIdDeAeropuerto(aeropuertoSeleccionado.getNombre(),
+                    aeropuertoSeleccionado.getAnioInauguracion(),
+                    aeropuertoSeleccionado.getCapacidad(),
+                    aeropuertoSeleccionado.getId_direccion());
             boolean existeModelo = avionesDao.existeModeloEnAeropuerto(txtModelo.getText(), idAeropuerto);
 
-            if(existeModelo) {
-                //Mensaje de alerta
+            if (existeModelo) {
+                // Mensaje de alerta
                 Alert alerta = generarVentana(Alert.AlertType.ERROR, "El MODELO existe en el AEROPUERTO seleccionado", "ERROR");
                 alerta.show();
-            }else {
-
+            } else {
                 int activado = rbActivado.isSelected() ? 1 : 0;
-                avionesDao.insertarAvion(txtModelo.getText(), Integer.parseInt(txtAsientos.getText()), Float.parseFloat(txtVelMax.getText()), activado, idAeropuerto);
+                avionesDao.insertarAvion(txtModelo.getText(), Integer.parseInt(txtAsientos.getText()),
+                        Float.parseFloat(txtVelMax.getText()), activado, idAeropuerto);
 
-                //Mensaje de alerta
+                // Mensaje de alerta
                 Alert alerta = generarVentana(Alert.AlertType.INFORMATION, "Se ha AÑADIDO un avión", "INFO");
                 alerta.show();
 
@@ -88,43 +101,64 @@ public class M_AddAvionController {
         }
     }
 
-    /** VALIDAR TEXTFIELDS */
+    /**
+     * Valida los datos ingresados en los campos de texto y verifica si hay errores.
+     *
+     * @return Un String con los mensajes de error, o vacío si no hay errores.
+     */
     private String validarDatos() {
-        String errores="";
+        String errores = "";
 
-        //Validar campos numéricos
-        if(!esNumeroEntero(txtAsientos.getText())) {
-            errores+="El NÚMERO DE ASIENTOS debe ser un número\n";
+        // Validar campos numéricos
+        if (!esNumeroEntero(txtAsientos.getText())) {
+            errores += "El NÚMERO DE ASIENTOS debe ser un número\n";
         }
 
-        if(!esNumeroDecimal(txtVelMax.getText())) {
-            errores+="La VELOCIDAD MÁXIMA debe ser un número decimal\n";
+        if (!esNumeroDecimal(txtVelMax.getText())) {
+            errores += "La VELOCIDAD MÁXIMA debe ser un número decimal\n";
         }
 
-        //Validar modelo
-        if(txtModelo.getText().length()==0) {
-            errores+="Se debe asignar el MODELO del avión\n";
+        // Validar modelo
+        if (txtModelo.getText().length() == 0) {
+            errores += "Se debe asignar el MODELO del avión\n";
         }
 
-        //Validar Radios
-        if(rbActivado.isSelected()==false && rbDesactivado.isSelected()==false) {
-            errores+="Se debe SELECCIONAR uno de los radios\n";
+        // Validar Radios
+        if (rbActivado.isSelected() == false && rbDesactivado.isSelected() == false) {
+            errores += "Se debe SELECCIONAR uno de los radios\n";
         }
 
         return errores;
     }
 
-    /** VALIDAR SI ES UN NUMERO DECIMAL */
+    /**
+     * Verifica si la cadena proporcionada es un número decimal.
+     *
+     * @param valor La cadena a verificar.
+     * @return true si la cadena es un número decimal; false en caso contrario.
+     */
     private static boolean esNumeroDecimal(String valor) {
         return valor.matches("-?\\d+(\\.\\d+)?");
     }
 
-    /** VALIDAR SI ES UN NUMERO */
+    /**
+     * Verifica si la cadena proporcionada es un número entero.
+     *
+     * @param valor La cadena a verificar.
+     * @return true si la cadena es un número entero; false en caso contrario.
+     */
     private static boolean esNumeroEntero(String valor) {
         return valor.matches("-?\\d+");
     }
 
-    /** GENERAR VENTANA DE ALERTA */
+    /**
+     * Crea y devuelve una alerta con el mensaje y título proporcionados.
+     *
+     * @param tipoDeAlerta El tipo de alerta a generar.
+     * @param mensaje El mensaje que se mostrará en la alerta.
+     * @param title El título de la alerta.
+     * @return Un objeto Alert configurado.
+     */
     private Alert generarVentana(Alert.AlertType tipoDeAlerta, String mensaje, String title) {
         Alert alerta = new Alert(tipoDeAlerta);
         alerta.setContentText(mensaje);
@@ -133,7 +167,9 @@ public class M_AddAvionController {
         return alerta;
     }
 
-    /** LIMPIAR DATOS DE VENTANA */
+    /**
+     * Limpia los datos de los campos de texto y restablece los valores predeterminados.
+     */
     private void limpiarVentana() {
         txtAsientos.setText("");
         txtModelo.setText("");
@@ -142,5 +178,4 @@ public class M_AddAvionController {
         rbDesactivado.setSelected(false);
         cmbAeropuerto.setValue(elementosCombo.get(0));
     }
-
 }

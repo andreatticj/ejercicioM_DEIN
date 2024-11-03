@@ -13,6 +13,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 
+/**
+ * Controlador para la ventana de activación/desactivación de aviones.
+ * Gestiona la carga de aeropuertos y aviones, así como la actualización
+ * del estado de activación de un avión seleccionado.
+ */
 public class M_ActivarDesactivarAvionController {
 
     @FXML
@@ -39,7 +44,11 @@ public class M_ActivarDesactivarAvionController {
     private ObservableList<Aeropuertos> elementosComboAeropuertos;
     private ObservableList<Aviones> elementosComboAviones;
 
-    /** INITIALIZE - INICIALIZAR CARGA DE DATOS */
+    /**
+     * Inicializa el controlador. Este método se llama automáticamente
+     * después de que se cargue el FXML. Carga los aeropuertos en el
+     * ComboBox y establece los listeners necesarios para la selección.
+     */
     @FXML
     void initialize() {
         // Instanciar Dao
@@ -70,6 +79,11 @@ public class M_ActivarDesactivarAvionController {
         btnGuardar.setDefaultButton(true);
     }
 
+    /**
+     * Carga los aviones disponibles para el aeropuerto seleccionado en el ComboBox.
+     *
+     * @param aeropuerto El aeropuerto del cual se quieren cargar los aviones.
+     */
     private void cargarAvionesPorAeropuerto(Aeropuertos aeropuerto) {
         elementosComboAviones = avionesDao.dameAvionesPorAeropuerto(aeropuerto.getId());
         cmbAviones.setItems(elementosComboAviones);
@@ -83,6 +97,11 @@ public class M_ActivarDesactivarAvionController {
         actualizarEstadoRadioButton();
     }
 
+    /**
+     * Actualiza el estado de los radio buttons según el avión seleccionado.
+     * Si el avión está activado, se selecciona el radio correspondiente.
+     * Si no hay avión seleccionado, ambos radio buttons se desmarcan.
+     */
     private void actualizarEstadoRadioButton() {
         if (cmbAviones.getSelectionModel().getSelectedItem() != null) {
             int activado = cmbAviones.getSelectionModel().getSelectedItem().getActivado();
@@ -100,6 +119,12 @@ public class M_ActivarDesactivarAvionController {
         }
     }
 
+    /**
+     * Maneja el evento de cancelación. Cierra la ventana modal cuando se
+     * hace clic en el botón "Cancelar".
+     *
+     * @param event El evento de acción del botón.
+     */
     @FXML
     void actCancelar(ActionEvent event) {
         // Cerrar ventana modal
@@ -107,6 +132,12 @@ public class M_ActivarDesactivarAvionController {
         stage.close();
     }
 
+    /**
+     * Maneja el evento de guardar. Actualiza el estado de activación del avión
+     * seleccionado y muestra un mensaje de alerta sobre el resultado de la operación.
+     *
+     * @param event El evento de acción del botón.
+     */
     @FXML
     void actGuardar(ActionEvent event) {
         // Actualizar campo activado en base al radio seleccionado
@@ -125,7 +156,14 @@ public class M_ActivarDesactivarAvionController {
         }
     }
 
-    /** GENERAR VENTANA DE ALERTA */
+    /**
+     * Genera una ventana de alerta personalizada.
+     *
+     * @param tipoDeAlerta El tipo de alerta a crear.
+     * @param mensaje El mensaje que se mostrará en la alerta.
+     * @param title El título de la ventana de alerta.
+     * @return La alerta creada.
+     */
     private Alert generarVentana(Alert.AlertType tipoDeAlerta, String mensaje, String title) {
         Alert alerta = new Alert(tipoDeAlerta);
         alerta.setContentText(mensaje);

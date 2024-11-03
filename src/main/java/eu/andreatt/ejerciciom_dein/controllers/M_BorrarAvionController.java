@@ -32,15 +32,18 @@ public class M_BorrarAvionController {
     private ObservableList<Aeropuertos> elementosComboAeropuertos;
     private ObservableList<Aviones> elementosComboAviones;
 
-    /** INITIALIZE - INICIALIZAR CARGA DE DATOS */
+    /**
+     * Método inicializador que carga los datos necesarios al inicio del controlador.
+     * Se instancian los DAOs y se cargan los aeropuertos y aviones en los ComboBoxes.
+     * Además, se establece un listener para actualizar la lista de aviones al cambiar de aeropuerto.
+     */
     @FXML
     void initialize() {
         // Instanciar Dao
         aeropuertosDao = new AeropuertosDao();
         avionesDao = new AvionesDao();
 
-
-        //Cargar combos
+        // Cargar combos
         elementosComboAeropuertos = aeropuertosDao.cargarAeropuertos();
         cmbAeropuertos.setItems(elementosComboAeropuertos);
         cmbAeropuertos.setValue(elementosComboAeropuertos.get(0));
@@ -49,14 +52,14 @@ public class M_BorrarAvionController {
         cmbAviones.setItems(elementosComboAviones);
         cmbAviones.setValue(elementosComboAviones.get(0));
 
-        //Actualizar combo de aviones en base al aeropuerto seleccionado
+        // Actualizar combo de aviones en base al aeropuerto seleccionado
         cmbAeropuertos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 elementosComboAviones = avionesDao.dameAvionesPorAeropuerto(newValue.getId());
-                if(elementosComboAviones.size()!=0) {
+                if (elementosComboAviones.size() != 0) {
                     cmbAviones.setItems(elementosComboAviones);
                     cmbAviones.setValue(elementosComboAviones.get(0));
-                }else {
+                } else {
                     cmbAviones.setItems(null);
                 }
             }
@@ -64,14 +67,18 @@ public class M_BorrarAvionController {
         btnGuardar.setDefaultButton(true);
     }
 
-
-
+    /**
+     * Maneja la acción de borrar un avión.
+     * Verifica si se ha seleccionado un avión en el ComboBox y lo elimina de la base de datos.
+     * Muestra un mensaje de alerta para informar al usuario sobre el resultado de la operación.
+     *
+     * @param event El evento de acción que dispara este método.
+     */
     @FXML
     void actBorrarAvion(ActionEvent event) {
         if (cmbAviones.getSelectionModel().getSelectedItem() != null) {
             int id = cmbAviones.getSelectionModel().getSelectedItem().getId();
             avionesDao.borrarAvion(id);
-
 
             // Mensaje de alerta
             Alert alerta = generarVentana(Alert.AlertType.INFORMATION, "Se ha BORRADO el AVIÓN", "INFO");
@@ -83,6 +90,11 @@ public class M_BorrarAvionController {
         }
     }
 
+    /**
+     * Maneja la acción de cancelar y cierra la ventana modal.
+     *
+     * @param event El evento de acción que dispara este método.
+     */
     @FXML
     void btnCancelarAvion(ActionEvent event) {
         // Cerrar ventana modal
@@ -90,7 +102,14 @@ public class M_BorrarAvionController {
         stage.close();
     }
 
-    /** Generar ventana de alerta */
+    /**
+     * Genera una ventana de alerta con el mensaje y título proporcionados.
+     *
+     * @param tipoDeAlerta El tipo de alerta a generar.
+     * @param mensaje El mensaje que se mostrará en la alerta.
+     * @param title El título de la alerta.
+     * @return Un objeto Alert configurado.
+     */
     private Alert generarVentana(Alert.AlertType tipoDeAlerta, String mensaje, String title) {
         Alert alerta = new Alert(tipoDeAlerta);
         alerta.setContentText(mensaje);
