@@ -64,6 +64,8 @@ El proyecto se organiza en diferentes paquetes, cada uno con su propia funcional
     - `avion.png`
     - `plane.png`
 
+- **configuration.properties**: Archivo de configuración para definir propiedades de la aplicación.
+
 - **module-info.java**: Archivo de configuración del módulo Java.
 
 ## Requisitos
