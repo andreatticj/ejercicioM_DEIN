@@ -6,12 +6,13 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane vgap="10.0" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.andreatt.ejerciciom_dein.controllers.M_EditAeropuertoController">
+<GridPane vgap="10.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.andreatt.ejerciciom_dein.controllers.M_EditAeropuertoController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -29,6 +30,9 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints />
     </rowConstraints>
     <children>
         <Label text="EDITAR AEROPUERTO" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -44,9 +48,9 @@
         <Label text="Numero:" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
         <Label text="Año de inaguracion:" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
         <Label text="Capacidad:" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-        <Label fx:id="lblFinanciacion" text="Financiacion" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
-        <Label fx:id="lblNumTrabajadores" text="Numero de trabajadores:" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
-        <Label fx:id="lblSocios" text="Nº Socios" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
+        <Label fx:id="lblFinanciacion" text="Financiacion" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.valignment="CENTER" />
+        <Label fx:id="lblNumTrabajadores" text="Numero de trabajadores:" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="12" GridPane.valignment="CENTER" />
+        <Label fx:id="lblSocios" text="Nº Socios" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.valignment="CENTER" />
         <TextField fx:id="txtPais" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
             <GridPane.margin>
                 <Insets right="20.0" />
@@ -77,32 +81,39 @@
                 <Insets right="20.0" />
             </GridPane.margin>
         </TextField>
-        <TextField fx:id="txtFinanciacion" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER">
+        <TextField fx:id="txtFinanciacion" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.valignment="CENTER">
             <GridPane.margin>
                 <Insets right="20.0" />
             </GridPane.margin>
         </TextField>
-        <TextField fx:id="txtNumTrabajadores" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+        <TextField fx:id="txtNumTrabajadores" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" GridPane.valignment="CENTER">
             <GridPane.margin>
                 <Insets right="20.0" />
             </GridPane.margin>
         </TextField>
-        <TextField fx:id="txtSocios" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="9">
+        <TextField fx:id="txtSocios" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="11">
             <GridPane.margin>
                 <Insets right="20.0" />
             </GridPane.margin>
         </TextField>
-        <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" GridPane.halignment="CENTER" GridPane.rowIndex="12" GridPane.valignment="CENTER" />
-        <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="12" GridPane.valignment="CENTER" />
-        <HBox GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+        <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#guardar" text="Guardar" GridPane.halignment="CENTER" GridPane.rowIndex="14" GridPane.valignment="CENTER" />
+        <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="14" GridPane.valignment="CENTER" />
+        <HBox GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER">
             <children>
-                <RadioButton fx:id="rbPublico" mnemonicParsing="false" text="Publico" disable="true">
+                <RadioButton fx:id="rbPublico" disable="true" mnemonicParsing="false" text="Publico">
                     <toggleGroup>
                         <ToggleGroup fx:id="rbGroup" />
                     </toggleGroup>
                 </RadioButton>
-                <RadioButton fx:id="rbPrivado" mnemonicParsing="false" text="Privado" toggleGroup="$rbGroup" disable="true" />
+                <RadioButton fx:id="rbPrivado" disable="true" mnemonicParsing="false" text="Privado" toggleGroup="$rbGroup" />
             </children>
         </HBox>
+      <Button fx:id="btnImagen" mnemonicParsing="false" onAction="#actionImagen" text="Seleccionar imagen..." GridPane.columnIndex="1" GridPane.rowIndex="8">
+         <GridPane.margin>
+            <Insets right="20.0" />
+         </GridPane.margin>
+      </Button>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Imagen:" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+      <ImageView fx:id="imageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="9" />
     </children>
 </GridPane>

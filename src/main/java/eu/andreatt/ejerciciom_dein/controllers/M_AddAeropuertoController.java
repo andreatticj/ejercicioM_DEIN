@@ -10,6 +10,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +40,9 @@ public class M_AddAeropuertoController {
 
     @FXML
     private Label lblSocios;
+
+    @FXML
+    private ImageView imageView;
 
     @FXML
     private ToggleGroup rbGroup;
@@ -193,6 +197,7 @@ public class M_AddAeropuertoController {
     @FXML
     void actionImagen(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
+        System.out.println("BUTTIN IMG");
         configureFileChooser(fileChooser);
 
         Stage stage = (Stage) btnImagen.getScene().getWindow();
@@ -207,7 +212,7 @@ public class M_AddAeropuertoController {
                     Image image = new Image(archivoSeleccionado.toURI().toString());
                     ruta = archivoSeleccionado.getAbsolutePath();
                     // Asumir que hay un ImageView para mostrar la imagen
-                    // imageView.setImage(image); // Si hay un ImageView, descomentar
+                     imageView.setImage(image); // Si hay un ImageView, descomentar
                 }
             } catch (IOException e) {
                 e.printStackTrace();
