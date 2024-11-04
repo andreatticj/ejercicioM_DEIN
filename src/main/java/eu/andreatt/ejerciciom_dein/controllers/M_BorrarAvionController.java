@@ -33,7 +33,7 @@ public class M_BorrarAvionController {
     private ObservableList<Aviones> elementosComboAviones;
 
     /**
-     * Método inicializador que carga los datos necesarios al inicio del controlador.
+     * Metodo inicializador que carga los datos necesarios al inicio del controlador.
      * Se instancian los DAOs y se cargan los aeropuertos y aviones en los ComboBoxes.
      * Además, se establece un listener para actualizar la lista de aviones al cambiar de aeropuerto.
      */
@@ -65,6 +65,7 @@ public class M_BorrarAvionController {
             }
         });
         btnGuardar.setDefaultButton(true);
+        btnCancelar.setCancelButton(true);
     }
 
     /**
@@ -72,7 +73,7 @@ public class M_BorrarAvionController {
      * Verifica si se ha seleccionado un avión en el ComboBox y lo elimina de la base de datos.
      * Muestra un mensaje de alerta para informar al usuario sobre el resultado de la operación.
      *
-     * @param event El evento de acción que dispara este método.
+     * @param event El evento de acción que dispara este metodo.
      */
     @FXML
     void actBorrarAvion(ActionEvent event) {
@@ -93,7 +94,7 @@ public class M_BorrarAvionController {
     /**
      * Maneja la acción de cancelar y cierra la ventana modal.
      *
-     * @param event El evento de acción que dispara este método.
+     * @param event El evento de acción que dispara este metodo.
      */
     @FXML
     void btnCancelarAvion(ActionEvent event) {

@@ -1,9 +1,6 @@
 package eu.andreatt.ejerciciom_dein.controllers;
 
-import eu.andreatt.ejerciciom_dein.dao.AeropuertosDao;
-import eu.andreatt.ejerciciom_dein.dao.AeropuertosPrivadosDao;
-import eu.andreatt.ejerciciom_dein.dao.AeropuertosPublicosDao;
-import eu.andreatt.ejerciciom_dein.dao.DireccionesDao;
+import eu.andreatt.ejerciciom_dein.dao.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -323,5 +320,15 @@ public class M_AddAeropuertoController {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    /**
+     * Inicializa el controlador. Este metodo se llama automáticamente
+     * después de que se cargue el FXML.
+     */
+    @FXML
+    void initialize() {
+        btnGuardar.setDefaultButton(true);
+        btnCancelar.setCancelButton(true);
     }
 }

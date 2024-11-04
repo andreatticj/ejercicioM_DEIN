@@ -46,7 +46,7 @@ public class M_AddAvionController {
     /**
      * Maneja la acción de cancelar y cierra la ventana modal.
      *
-     * @param event El evento de acción que dispara este método.
+     * @param event El evento de acción que dispara este metodo.
      */
     @FXML
     void actCancelarAviones(ActionEvent event) {
@@ -60,7 +60,7 @@ public class M_AddAvionController {
      * Valida los datos introducidos y si son correctos, los guarda en la base de datos.
      * Muestra mensajes de alerta en caso de errores o éxito.
      *
-     * @param event El evento de acción que dispara este método.
+     * @param event El evento de acción que dispara este metodo.
      */
     @FXML
     void actGuardarAviones(ActionEvent event) {

@@ -45,7 +45,7 @@ public class M_ActivarDesactivarAvionController {
     private ObservableList<Aviones> elementosComboAviones;
 
     /**
-     * Inicializa el controlador. Este método se llama automáticamente
+     * Inicializa el controlador. Este metodo se llama automáticamente
      * después de que se cargue el FXML. Carga los aeropuertos en el
      * ComboBox y establece los listeners necesarios para la selección.
      */
@@ -77,6 +77,7 @@ public class M_ActivarDesactivarAvionController {
             actualizarEstadoRadioButton();
         });
         btnGuardar.setDefaultButton(true);
+        btnCancelar.setCancelButton(true);
     }
 
     /**

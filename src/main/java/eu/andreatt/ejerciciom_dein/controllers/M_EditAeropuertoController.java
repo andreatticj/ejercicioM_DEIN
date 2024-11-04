@@ -89,6 +89,7 @@ public class M_EditAeropuertoController {
         aeropuertosPrivadosDao = new AeropuertosPrivadosDao();
         aeropuertosPublicosDao = new AeropuertosPublicosDao();
         btnGuardar.setDefaultButton(true);
+        btnCancelar.setCancelButton(true);
     }
 
     /**
@@ -155,219 +156,166 @@ public class M_EditAeropuertoController {
     }
 
     /**
-     * Getter para el RadioButton privado.
-     *
-     * @return RadioButton correspondiente a aeropuertos privados.
+     * Metodos getter y setter para los atributos privados.
+     * Se utilizan para acceder y modificar el estado de los atributos desde fuera de la clase.
      */
+
     public RadioButton getRadioPrivado() {
         return rbPrivado;
     }
 
-    /**
-     * Setter para el RadioButton privado.
-     *
-     * @param radioPrivado RadioButton correspondiente a aeropuertos privados.
-     */
     public void setRadioPrivado(RadioButton radioPrivado) {
         this.rbPrivado = radioPrivado;
     }
 
-    /**
-     * Getter para el RadioButton público.
-     *
-     * @return RadioButton correspondiente a aeropuertos públicos.
-     */
     public RadioButton getRadioPublico() {
         return rbPublico;
     }
 
-    /**
-     * Setter para el RadioButton público.
-     *
-     * @param radioPublico RadioButton correspondiente a aeropuertos públicos.
-     */
     public void setRadioPublico(RadioButton radioPublico) {
         this.rbPublico = radioPublico;
     }
 
-    /**
-     * Getter para el campo de texto del año de inauguración.
-     *
-     * @return Campo de texto del año de inauguración.
-     */
     public TextField getTextFieldAnioInauguracion() {
         return txtAnioInaguracion;
     }
 
-    /**
-     * Setter para el campo de texto del año de inauguración.
-     *
-     * @param textFieldAnioInauguracion Valor a establecer en el campo de texto del año de inauguración.
-     */
     public void setTextFieldAnioInauguracion(String textFieldAnioInauguracion) {
         this.txtAnioInaguracion.setText(textFieldAnioInauguracion);
     }
 
-    /**
-     * Getter para el campo de texto de la calle.
-     *
-     * @return Campo de texto de la calle.
-     */
     public TextField getTextFieldCalle() {
         return txtCalle;
     }
 
-    /**
-     * Setter para el campo de texto de la calle.
-     *
-     * @param textFieldCalle Valor a establecer en el campo de texto de la calle.
-     */
     public void setTextFieldCalle(String textFieldCalle) {
         this.txtCalle.setText(textFieldCalle);
     }
 
-    /**
-     * Getter para el campo de texto de la capacidad.
-     *
-     * @return Campo de texto de la capacidad.
-     */
     public TextField getTextFieldCapacidad() {
         return txtCapaciad;
     }
 
-    /**
-     * Setter para el campo de texto de la capacidad.
-     *
-     * @param textFieldCapacidad Valor a establecer en el campo de texto de la capacidad.
-     */
     public void setTextFieldCapacidad(String textFieldCapacidad) {
         this.txtCapaciad.setText(textFieldCapacidad);
     }
 
-    /**
-     * Getter para el campo de texto de la ciudad.
-     *
-     * @return Campo de texto de la ciudad.
-     */
     public TextField getTextFieldCiudad() {
         return txtCiudad;
     }
 
-    /**
-     * Setter para el campo de texto de la ciudad.
-     *
-     * @param textFieldCiudad Valor a establecer en el campo de texto de la ciudad.
-     */
     public void setTextFieldCiudad(String textFieldCiudad) {
         this.txtCiudad.setText(textFieldCiudad);
     }
 
-    /**
-     * Getter para el campo de texto de la financiación.
-     *
-     * @return Campo de texto de la financiación.
-     */
     public TextField getTextFieldFinanciacion() {
         return txtFinanciacion;
     }
 
-    /**
-     * Setter para el campo de texto de la financiación.
-     *
-     * @param textFieldFinanciacion Valor a establecer en el campo de texto de la financiación.
-     */
     public void setTextFieldFinanciacion(String textFieldFinanciacion) {
         this.txtFinanciacion.setText(textFieldFinanciacion);
     }
 
-    /**
-     * Getter para el campo de texto del nombre.
-     *
-     * @return Campo de texto del nombre.
-     */
     public TextField getTextFieldNombre() {
         return txtNombre;
     }
 
-    /**
-     * Setter para el campo de texto del nombre.
-     *
-     * @param textFieldNombre Valor a establecer en el campo de texto del nombre.
-     */
     public void setTextFieldNombre(String textFieldNombre) {
         this.txtNombre.setText(textFieldNombre);
     }
 
-    /**
-     * Getter para el campo de texto del número de trabajadores.
-     *
-     * @return Campo de texto del número de trabajadores.
-     */
+    public TextField getTextFieldNumSocios() {
+        return txtSocios;
+    }
+
+    public void setTextFieldNumSocios(String textFieldNumSocios) {
+        this.txtSocios.setText(textFieldNumSocios);
+    }
+
     public TextField getTextFieldNumTrabajadores() {
         return txtNumTrabajadores;
     }
 
-    /**
-     * Setter para el campo de texto del número de trabajadores.
-     *
-     * @param textFieldNumTrabajadores Valor a establecer en el campo de texto del número de trabajadores.
-     */
     public void setTextFieldNumTrabajadores(String textFieldNumTrabajadores) {
         this.txtNumTrabajadores.setText(textFieldNumTrabajadores);
     }
 
-    /**
-     * Getter para el campo de texto del número.
-     *
-     * @return Campo de texto del número.
-     */
     public TextField getTextFieldNumero() {
         return txtNumero;
     }
 
-    /**
-     * Setter para el campo de texto del número.
-     *
-     * @param textFieldNumero Valor a establecer en el campo de texto del número.
-     */
     public void setTextFieldNumero(String textFieldNumero) {
         this.txtNumero.setText(textFieldNumero);
     }
 
-    /**
-     * Getter para el campo de texto del país.
-     *
-     * @return Campo de texto del país.
-     */
     public TextField getTextFieldPais() {
         return txtPais;
     }
 
-    /**
-     * Setter para el campo de texto del país.
-     *
-     * @param textFieldPais Valor a establecer en el campo de texto del país.
-     */
     public void setTextFieldPais(String textFieldPais) {
         this.txtPais.setText(textFieldPais);
     }
 
-    /**
-     * Getter para el campo de texto de los socios.
-     *
-     * @return Campo de texto de los socios.
-     */
-    public TextField getTextFieldSocios() {
-        return txtSocios;
+    public boolean isPrivadoSelected() {
+        return isPrivadoSelected;
+    }
+
+    public boolean isPublicSelected() {
+        return isPublicSelected;
+    }
+
+    public void setPrivadoSelected(boolean isPrivadoSelected) {
+        this.isPrivadoSelected = isPrivadoSelected;
+    }
+
+    public void setPublicSelected(boolean isPublicSelected) {
+        this.isPublicSelected = isPublicSelected;
+    }
+
+    public int getIdDireccion() {
+        return idDireccion;
+    }
+
+    public void setIdDireccion(int idDireccion) {
+        this.idDireccion = idDireccion;
+    }
+
+    public int getIdAeropuerto() {
+        return idAeropuerto;
+    }
+
+    public void setIdAeropuerto(int idAeropuerto) {
+        this.idAeropuerto = idAeropuerto;
     }
 
     /**
-     * Setter para el campo de texto de los socios.
-     *
-     * @param textFieldSocios Valor a establecer en el campo de texto de los socios.
+     * Establece el radio de Aeropuerto Privado como seleccionado
+     * y ajusta la visibilidad de los componentes relacionados.
      */
-    public void setTextFieldSocios(String textFieldSocios) {
-        this.txtSocios.setText(textFieldSocios);
+    public void habilitarRadioPrivados() {
+        rbPrivado.setSelected(true);
+        rbPublico.setSelected(false);
+        lblSocios.setVisible(true);
+        txtSocios.setVisible(true);
+        lblFinanciacion.setVisible(false);
+        txtFinanciacion.setVisible(false);
+        lblNumTrabajadores.setVisible(false);
+        txtNumTrabajadores.setVisible(false);
+    }
+
+    /**
+     * Establece el radio de Aeropuerto Público como seleccionado
+     * y ajusta la visibilidad de los componentes relacionados.
+     */
+    public void habilitarRadioPublicos() {
+        rbPrivado.setSelected(false);
+        rbPublico.setSelected(true);
+        lblSocios.setVisible(false);
+        txtSocios.setVisible(false);
+        lblFinanciacion.setVisible(true);
+        txtFinanciacion.setVisible(true);
+        lblNumTrabajadores.setVisible(true);
+        txtNumTrabajadores.setVisible(true);
     }
 
     /**
