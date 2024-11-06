@@ -26,7 +26,7 @@ public class AeropuertosDao {
 	 */
 	public ObservableList<Aeropuertos> cargarAeropuertos() {
 		ObservableList<Aeropuertos> aeropuertos = FXCollections.observableArrayList();
-		try {
+		try {conexion = new ConexionBD();
 			String consulta = "SELECT id, nombre, anio_inauguracion, capacidad, id_direccion FROM aeropuertos";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 			ResultSet rs = pstmt.executeQuery();
@@ -59,7 +59,7 @@ public class AeropuertosDao {
 	 * @return true si la inserción fue exitosa, false en caso contrario.
 	 */
 	public boolean insertarAeropuerto(String nombre, int anioInauguracion, int capacidad, int idDireccion) {
-		try {
+		try {conexion = new ConexionBD();
 			String consulta = "INSERT INTO aeropuertos (nombre, anio_inauguracion, capacidad, id_direccion) VALUES (?, ?, ?, ?)";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 			pstmt.setString(1, nombre);
@@ -87,7 +87,7 @@ public class AeropuertosDao {
 	 * @return true si la eliminación fue exitosa, false en caso contrario.
 	 */
 	public boolean borrarAeropuerto(String nombre, int anioInauguracion, int capacidad, int idDireccion) {
-		try {
+		try {conexion = new ConexionBD();
 			String consulta = "DELETE FROM aeropuertos WHERE nombre = ? AND anio_inauguracion = ? AND capacidad = ? AND id_direccion = ?";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 
@@ -118,7 +118,7 @@ public class AeropuertosDao {
 	 * @return true si la actualización fue exitosa, false en caso contrario.
 	 */
 	public boolean actualizarAeropuerto(int id, String nombre, int anioInauguracion, int capacidad, int id_direccion) {
-		try {
+		try {conexion = new ConexionBD();
 			String consulta = "UPDATE aeropuertos SET nombre = ?, anio_inauguracion = ?, capacidad = ?, id_direccion = ? WHERE id = ?";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 			pstmt.setString(1, nombre);
@@ -143,7 +143,7 @@ public class AeropuertosDao {
 	 * @return El ID más grande, o -1 si no se encontró ningún ID.
 	 */
 	public int dameMaxIdAeropuertos() {
-		try {
+		try {conexion = new ConexionBD();
 			String consulta = "SELECT MAX(id) AS max_id FROM aeropuertos";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 
@@ -171,7 +171,7 @@ public class AeropuertosDao {
 	 * @return El ID del aeropuerto, o -1 si no se encontró.
 	 */
 	public int dameIdDeAeropuerto(String nombre, int anioInauguracion, int capacidad, int idDireccion) {
-		try {
+		try {conexion = new ConexionBD();
 			String consulta = "SELECT id FROM aeropuertos WHERE nombre = ? AND anio_inauguracion = ? AND capacidad = ? AND id_direccion = ?";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 
@@ -203,7 +203,7 @@ public class AeropuertosDao {
 	public boolean existeNombreAeropuerto(String nombre) {
 		boolean existe = false;
 
-		try {
+		try {conexion = new ConexionBD();
 			String consulta = "SELECT * FROM aeropuertos WHERE nombre = ?";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 			pstmt.setString(1, nombre);
@@ -231,7 +231,7 @@ public class AeropuertosDao {
 	 * @return true si la inserción fue exitosa, false en caso contrario.
 	 */
 	public boolean insertarImagen(String ruta, int id) {
-		try {
+		try {conexion = new ConexionBD();
 			File file = new File(ruta);
 			byte[] imageData = Files.readAllBytes(file.toPath());
 
@@ -257,7 +257,7 @@ public class AeropuertosDao {
 	 * @return Un InputStream de la imagen, o null si no se encontró.
 	 */
 	public InputStream getImagen(int id) {
-		try {
+		try {conexion = new ConexionBD();
 			String consulta = "SELECT imagen FROM aeropuertos WHERE id = ?";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 			pstmt.setInt(1, id);

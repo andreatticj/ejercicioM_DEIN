@@ -168,7 +168,7 @@ public class M_ListadoAeropuertosController {
     }
 
     /**
-     * Método que se ejecuta al pulsar el botón para añadir un nuevo aeropuerto.
+     * Metodo que se ejecuta al pulsar el botón para añadir un nuevo aeropuerto.
      * Abre la ventana para añadir un aeropuerto.
      *
      * @param event El evento de acción generado al pulsar el botón.
@@ -179,7 +179,7 @@ public class M_ListadoAeropuertosController {
     }
 
     /**
-     * Método que se ejecuta al pulsar el botón para añadir un nuevo avión.
+     * Metodo que se ejecuta al pulsar el botón para añadir un nuevo avión.
      * Abre la ventana para añadir un avión.
      *
      * @param event El evento de acción generado al pulsar el botón.
@@ -190,7 +190,7 @@ public class M_ListadoAeropuertosController {
     }
 
     /**
-     * Método que se ejecuta al pulsar el botón para borrar un aeropuerto.
+     * Metodo que se ejecuta al pulsar el botón para borrar un aeropuerto.
      * Verifica si se ha seleccionado un aeropuerto en las tablas correspondientes,
      * solicita confirmación al usuario y procede a borrar el aeropuerto seleccionado.
      *
@@ -255,7 +255,7 @@ public class M_ListadoAeropuertosController {
     }
 
     /**
-     * Método que se ejecuta al pulsar el botón para borrar un avión.
+     * Metodo que se ejecuta al pulsar el botón para borrar un avión.
      * Abre la ventana para borrar un avión.
      *
      * @param event El evento de acción generado al pulsar el botón.
@@ -266,7 +266,7 @@ public class M_ListadoAeropuertosController {
     }
 
     /**
-     * Método que se ejecuta al pulsar el botón para editar un aeropuerto.
+     * Metodo que se ejecuta al pulsar el botón para editar un aeropuerto.
      * Verifica si se ha seleccionado un aeropuerto en las tablas correspondientes
      * y abre la ventana de edición para el aeropuerto seleccionado.
      *
@@ -437,6 +437,11 @@ public class M_ListadoAeropuertosController {
         aeropuertosPrivadosExistentes.setAll(aeropuertosPrivadosDao.cargarAeropuertosPrivados());
         aeropuertosPublicosExistentes.setAll(aeropuertosPublicosDao.cargarAeropuertosPublicos());
 
+        // Llamar al método de configuración
+        configurarTablasYFiltrado();
+    }
+
+    private void configurarTablasYFiltrado() {
         // Configuración de las columnas de la tabla de aeropuertos públicos
         colIDPublico.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNombrePublico.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -460,22 +465,12 @@ public class M_ListadoAeropuertosController {
         colNSociosPrivado.setCellValueFactory(new PropertyValueFactory<>("numeroSocios"));
         colAnioPrivado.setCellValueFactory(new PropertyValueFactory<>("anioInauguracion"));
 
+        // Asignar las listas observables a las tablas
         tvAeropuertosPrivados.setItems(aeropuertosPrivadosExistentes);
         tvAeropuertosPublicos.setItems(aeropuertosPublicosExistentes);
 
-        // Añadir manejador de doble clic para aeropuertos privados
-        tvAeropuertosPrivados.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                mostrarAeropuerto(new ActionEvent(tvAeropuertosPrivados, null));
-            }
-        });
-
-        // Añadir manejador de doble clic para aeropuertos públicos
-        tvAeropuertosPublicos.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                mostrarAeropuerto(new ActionEvent(tvAeropuertosPublicos, null));
-            }
-        });
+        tvAeropuertosPrivados.refresh();
+        tvAeropuertosPublicos.refresh();
 
         // Llamar al método de filtrado
         configurarFiltradoAeropuertos();

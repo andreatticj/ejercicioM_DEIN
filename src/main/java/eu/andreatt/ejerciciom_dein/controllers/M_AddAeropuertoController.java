@@ -1,85 +1,69 @@
 package eu.andreatt.ejerciciom_dein.controllers;
 
-import eu.andreatt.ejerciciom_dein.dao.*;
+import eu.andreatt.ejerciciom_dein.dao.AeropuertosDao;
+import eu.andreatt.ejerciciom_dein.dao.AeropuertosPrivadosDao;
+import eu.andreatt.ejerciciom_dein.dao.AeropuertosPublicosDao;
+import eu.andreatt.ejerciciom_dein.dao.DireccionesDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import javafx.stage.FileChooser;
 import javafx.scene.image.Image;
 
 /**
- * Controlador para la ventana de añadir un aeropuerto.
+ * Controlador combinado para gestionar la creación de un nuevo aeropuerto.
  */
 public class M_AddAeropuertoController {
 
     @FXML
     private Button btnCancelar;
-
     @FXML
     private Button btnGuardar;
-
     @FXML
     private Button btnImagen;
-
     @FXML
     private Label lblFinanciacion;
-
     @FXML
     private Label lblNumTrabajadores;
-
     @FXML
     private Label lblSocios;
-
     @FXML
     private ImageView imageView;
-
     @FXML
     private ToggleGroup rbGroup;
-
     @FXML
     private RadioButton rbPrivado;
-
     @FXML
     private RadioButton rbPublico;
-
     @FXML
-    private TextField txtAnioInauguracion;
-
+    private TextField txtAnioInaguracion;
     @FXML
     private TextField txtCalle;
-
     @FXML
-    private TextField txtCapacidad;
-
+    private TextField txtCapaciad;
     @FXML
     private TextField txtCiudad;
-
     @FXML
     private TextField txtFinanciacion;
-
     @FXML
     private TextField txtNombre;
-
     @FXML
     private TextField txtNumTrabajadores;
-
     @FXML
     private TextField txtNumero;
-
     @FXML
     private TextField txtPais;
-
     @FXML
     private TextField txtSocios;
 
@@ -91,8 +75,7 @@ public class M_AddAeropuertoController {
     private String ruta;
 
     /**
-     * Maneja el evento de selección del botón de aeropuerto privado.
-     * Muestra los campos de número de socios y oculta los de financiación y número de trabajadores.
+     * Muestra u oculta los campos dependiendo del tipo de aeropuerto (privado o público).
      * @param event El evento de acción.
      */
     @FXML
@@ -105,11 +88,6 @@ public class M_AddAeropuertoController {
         txtNumTrabajadores.setVisible(false);
     }
 
-    /**
-     * Maneja el evento de selección del botón de aeropuerto público.
-     * Muestra los campos de financiación y número de trabajadores, y oculta el campo de número de socios.
-     * @param event El evento de acción.
-     */
     @FXML
     void actPublico(ActionEvent event) {
         lblSocios.setVisible(false);
@@ -121,7 +99,7 @@ public class M_AddAeropuertoController {
     }
 
     /**
-     * Maneja el evento de cancelación y cierra la ventana actual.
+     * Cierra la ventana actual sin guardar cambios.
      * @param event El evento de acción.
      */
     @FXML
@@ -131,8 +109,7 @@ public class M_AddAeropuertoController {
     }
 
     /**
-     * Maneja el evento de guardar la información del nuevo aeropuerto.
-     * Valida los campos, inserta la dirección y el aeropuerto, y muestra un mensaje de alerta.
+     * Guarda los datos del nuevo aeropuerto después de validarlos.
      * @param event El evento de acción.
      */
     @FXML
@@ -160,7 +137,6 @@ public class M_AddAeropuertoController {
 
         // Verificar si la dirección ya existe
         int direccionId = direccionesDao.existeDireccion(txtPais.getText(), txtCiudad.getText(), txtCalle.getText(), Integer.parseInt(txtNumero.getText()));
-
         if (direccionId == -1) {
             if (!direccionesDao.insertarDireccion(txtPais.getText(), txtCiudad.getText(), txtCalle.getText(), Integer.parseInt(txtNumero.getText()))) {
                 Alert alerta = generarVentana(AlertType.ERROR, "Error al insertar la dirección", "ERROR");
@@ -170,10 +146,11 @@ public class M_AddAeropuertoController {
             direccionId = direccionesDao.dameMaxIdDirecciones(); // Asignar el nuevo ID
         }
 
-        // Crear Aeropuerto
-        aeropuertosDao.insertarAeropuerto(txtNombre.getText(), Integer.parseInt(txtAnioInauguracion.getText()), Integer.parseInt(txtCapacidad.getText()), direccionId);
+        // Insertar el aeropuerto
+        aeropuertosDao.insertarAeropuerto(txtNombre.getText(), Integer.parseInt(txtAnioInaguracion.getText()), Integer.parseInt(txtCapaciad.getText()), direccionId);
         aeropuertosDao.insertarImagen(ruta, direccionId);
 
+        // Insertar según el tipo de aeropuerto
         if (rbPublico.isSelected()) {
             aeropuertosPublicosDao.insertarAeropuertoPublico(aeropuertosDao.dameMaxIdAeropuertos(), Float.parseFloat(txtFinanciacion.getText()), Integer.parseInt(txtNumTrabajadores.getText()));
         } else {
@@ -190,14 +167,12 @@ public class M_AddAeropuertoController {
     }
 
     /**
-     * Maneja el evento de selección de imagen para el aeropuerto.
-     * Abre un diálogo de selección de archivos para elegir una imagen y valida su tamaño.
+     * Permite seleccionar una imagen para el aeropuerto.
      * @param event El evento de acción.
      */
     @FXML
     void actionImagen(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        System.out.println("BUTTIN IMG");
         configureFileChooser(fileChooser);
 
         Stage stage = (Stage) btnImagen.getScene().getWindow();
@@ -211,8 +186,7 @@ public class M_AddAeropuertoController {
                 } else {
                     Image image = new Image(archivoSeleccionado.toURI().toString());
                     ruta = archivoSeleccionado.getAbsolutePath();
-                    // Asumir que hay un ImageView para mostrar la imagen
-                     imageView.setImage(image); // Si hay un ImageView, descomentar
+                    imageView.setImage(image); // Mostrar la imagen seleccionada
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -221,8 +195,8 @@ public class M_AddAeropuertoController {
     }
 
     /**
-     * Valida los datos introducidos en los campos de texto.
-     * @return Un string que contiene los errores de validación. Si no hay errores, retorna una cadena vacía.
+     * Valida los campos del formulario.
+     * @return Una cadena con los errores de validación, o una cadena vacía si todo está correcto.
      */
     private String validarCampos() {
         StringBuilder errores = new StringBuilder();
@@ -244,96 +218,86 @@ public class M_AddAeropuertoController {
         } else if (!esNumeroEntero(txtNumero.getText())) {
             errores.append("El campo NÚMERO debe ser un número\n");
         }
-        if (txtAnioInauguracion.getText().isEmpty()) {
+        if (txtAnioInaguracion.getText().isEmpty()) {
             errores.append("El campo AÑO DE INAUGURACIÓN debe contener texto\n");
-        } else if (!esNumeroEntero(txtAnioInauguracion.getText())) {
+        } else if (!esNumeroEntero(txtAnioInaguracion.getText())) {
             errores.append("El campo AÑO DE INAUGURACIÓN debe ser un número\n");
         }
-        if (txtCapacidad.getText().isEmpty()) {
+        if (txtCapaciad.getText().isEmpty()) {
             errores.append("El campo CAPACIDAD debe contener texto\n");
-        } else if (!esNumeroEntero(txtCapacidad.getText())) {
+        } else if (!esNumeroEntero(txtCapaciad.getText())) {
             errores.append("El campo CAPACIDAD debe ser un número\n");
         }
         if (rbPublico.isSelected()) {
             if (txtFinanciacion.getText().isEmpty()) {
                 errores.append("El campo FINANCIACIÓN debe contener texto\n");
             } else if (!esNumeroDecimal(txtFinanciacion.getText())) {
-                errores.append("El campo FINANCIACIÓN debe ser un número\n");
+                errores.append("El campo FINANCIACIÓN debe ser un número decimal\n");
             }
             if (txtNumTrabajadores.getText().isEmpty()) {
                 errores.append("El campo NÚMERO DE TRABAJADORES debe contener texto\n");
             } else if (!esNumeroEntero(txtNumTrabajadores.getText())) {
                 errores.append("El campo NÚMERO DE TRABAJADORES debe ser un número\n");
             }
-        }
-        if (rbPrivado.isSelected()) {
+        } else {
             if (txtSocios.getText().isEmpty()) {
-                errores.append("El campo NÚMERO DE SOCIOS debe contener texto\n");
+                errores.append("El campo SOCIOS debe contener texto\n");
             } else if (!esNumeroEntero(txtSocios.getText())) {
-                errores.append("El campo NÚMERO DE SOCIOS debe ser un número\n");
+                errores.append("El campo SOCIOS debe ser un número\n");
             }
         }
+
         return errores.toString();
     }
 
     /**
-     * Crea y devuelve una alerta con el mensaje y título proporcionados.
-     * @param tipo El tipo de alerta.
-     * @param mensaje El mensaje que se mostrará en la alerta.
-     * @param titulo El título de la alerta.
-     * @return Un objeto Alert configurado.
+     * Verifica si una cadena es un número entero.
+     * @param texto La cadena a verificar.
+     * @return True si es un número entero, false si no.
      */
-    private Alert generarVentana(AlertType tipo, String mensaje, String titulo) {
+    private boolean esNumeroEntero(String texto) {
+        try {
+            Integer.parseInt(texto);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Verifica si una cadena es un número decimal.
+     * @param texto La cadena a verificar.
+     * @return True si es un número decimal, false si no.
+     */
+    private boolean esNumeroDecimal(String texto) {
+        try {
+            Float.parseFloat(texto);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Crea una alerta de tipo especificado con el título y el contenido proporcionados.
+     * @param tipo El tipo de alerta.
+     * @param contenido El contenido de la alerta.
+     * @param titulo El título de la alerta.
+     * @return El objeto Alert.
+     */
+    private Alert generarVentana(AlertType tipo, String contenido, String titulo) {
         Alert alerta = new Alert(tipo);
         alerta.setTitle(titulo);
-        alerta.setContentText(mensaje);
+        alerta.setHeaderText(null);
+        alerta.setContentText(contenido);
         return alerta;
     }
 
     /**
-     * Configura el FileChooser para seleccionar archivos de imagen.
-     * @param fileChooser El FileChooser a configurar.
+     * Configura el file chooser para seleccionar imágenes.
+     * @param fileChooser El objeto FileChooser a configurar.
      */
     private void configureFileChooser(FileChooser fileChooser) {
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
-        fileChooser.setTitle("Seleccione una imagen");
-    }
-
-    /**
-     * Verifica si la cadena proporcionada es un número entero.
-     * @param cadena La cadena a verificar.
-     * @return true si la cadena es un número entero; false en caso contrario.
-     */
-    private boolean esNumeroEntero(String cadena) {
-        try {
-            Integer.parseInt(cadena);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Verifica si la cadena proporcionada es un número decimal.
-     * @param cadena La cadena a verificar.
-     * @return true si la cadena es un número decimal; false en caso contrario.
-     */
-    private boolean esNumeroDecimal(String cadena) {
-        try {
-            Float.parseFloat(cadena);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Inicializa el controlador. Este metodo se llama automáticamente
-     * después de que se cargue el FXML.
-     */
-    @FXML
-    void initialize() {
-        btnGuardar.setDefaultButton(true);
-        btnCancelar.setCancelButton(true);
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg"));
     }
 }
