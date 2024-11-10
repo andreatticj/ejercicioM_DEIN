@@ -8,6 +8,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.sql.Blob;
+
 /**
  * La clase M_EditarAeropuerto representa una ventana para editar la información
  * de un aeropuerto en la aplicación. Hereda de la clase Stage de JavaFX.
@@ -21,25 +23,26 @@ public class M_EditarAeropuerto extends Stage {
      * Carga el archivo FXML correspondiente para definir la interfaz de usuario,
      * establece los datos del aeropuerto a editar y configura la ventana.
      *
-     * @param nombre                El nombre del aeropuerto.
-     * @param pais                  El país del aeropuerto.
-     * @param ciudad                La ciudad donde se encuentra el aeropuerto.
-     * @param calle                 La calle del aeropuerto.
-     * @param numero                El número de la calle.
-     * @param anioInauguracion      El año de inauguración del aeropuerto.
-     * @param capacidad             La capacidad del aeropuerto.
-     * @param radioPublico          Indica si el aeropuerto es público.
-     * @param radioPrivado          Indica si el aeropuerto es privado.
-     * @param numSocios             El número de socios del aeropuerto.
-     * @param financiacion          La financiación del aeropuerto.
-     * @param numTrabajadores       El número de trabajadores del aeropuerto.
-     * @param idDireccion           El ID de la dirección del aeropuerto.
-     * @param idAeropuerto          El ID del aeropuerto.
+     * @param nombre           El nombre del aeropuerto.
+     * @param pais             El país del aeropuerto.
+     * @param ciudad           La ciudad donde se encuentra el aeropuerto.
+     * @param calle            La calle del aeropuerto.
+     * @param numero           El número de la calle.
+     * @param anioInauguracion El año de inauguración del aeropuerto.
+     * @param capacidad        La capacidad del aeropuerto.
+     * @param radioPublico     Indica si el aeropuerto es público.
+     * @param radioPrivado     Indica si el aeropuerto es privado.
+     * @param numSocios        El número de socios del aeropuerto.
+     * @param financiacion     La financiación del aeropuerto.
+     * @param numTrabajadores  El número de trabajadores del aeropuerto.
+     * @param idDireccion      El ID de la dirección del aeropuerto.
+     * @param idAeropuerto     El ID del aeropuerto.
+     * @param imagen
      */
     public M_EditarAeropuerto(String nombre, String pais, String ciudad, String calle, int numero,
                               int anioInauguracion, int capacidad, boolean radioPublico,
-                              boolean radioPrivado, int numSocios, float financiacion,
-                              int numTrabajadores, int idDireccion, int idAeropuerto) {
+                              boolean radioPrivado, int numSocios, double financiacion,
+                              int numTrabajadores, int idDireccion, int idAeropuerto, Blob imagen) {
         try {
             // Carga el archivo FXML para la interfaz de la ventana
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/eu/andreatt/ejerciciom_dein/fxml/M_EditarAeropuerto.fxml"));

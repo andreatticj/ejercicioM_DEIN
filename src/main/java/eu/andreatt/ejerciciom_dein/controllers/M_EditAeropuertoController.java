@@ -152,10 +152,15 @@ public class M_EditAeropuertoController {
         // Actualizar
         direccionesDao.actualizarDireccion(idDireccion, txtPais.getText(), txtCiudad.getText(), txtCalle.getText(), Integer.parseInt(txtNumero.getText()));
         aeropuertosDao.actualizarAeropuerto(idAeropuerto, txtNombre.getText(), Integer.parseInt(txtAnioInaguracion.getText()), Integer.parseInt(txtCapaciad.getText()), idDireccion);
+
+        if (imagen != null){
+            aeropuertosDao.insertarImagen(imagen,idAeropuerto);
+        }
+
         if (isPrivadoSelected) {
             aeropuertosPrivadosDao.actualizarAeropuertoPrivado(idAeropuerto, Integer.parseInt(txtSocios.getText()));
         } else {
-            aeropuertosPublicosDao.actualizarAeropuertoPublico(idAeropuerto, Float.parseFloat(txtFinanciacion.getText()), Integer.parseInt(txtNumTrabajadores.getText()));
+            aeropuertosPublicosDao.actualizarAeropuertoPublico(idAeropuerto, Double.parseDouble(txtFinanciacion.getText()), Integer.parseInt(txtNumTrabajadores.getText()));
         }
 
         // Mostrar información
@@ -172,6 +177,7 @@ public class M_EditAeropuertoController {
         // Cerrar ventana modal
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
+
     }
 
     /**
@@ -404,5 +410,8 @@ public class M_EditAeropuertoController {
         double kbs = (double) file.length() / 1024;
         return kbs <= 64; // Tamaño máximo de 64 KB
     }
+
+
+
 
 }

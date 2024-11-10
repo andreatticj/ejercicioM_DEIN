@@ -148,11 +148,11 @@ public class M_AddAeropuertoController {
 
         // Insertar el aeropuerto
         aeropuertosDao.insertarAeropuerto(txtNombre.getText(), Integer.parseInt(txtAnioInaguracion.getText()), Integer.parseInt(txtCapaciad.getText()), direccionId);
-        aeropuertosDao.insertarImagen(ruta, direccionId);
+        aeropuertosDao.insertarImagen(, direccionId);
 
         // Insertar según el tipo de aeropuerto
         if (rbPublico.isSelected()) {
-            aeropuertosPublicosDao.insertarAeropuertoPublico(aeropuertosDao.dameMaxIdAeropuertos(), Float.parseFloat(txtFinanciacion.getText()), Integer.parseInt(txtNumTrabajadores.getText()));
+            aeropuertosPublicosDao.insertarAeropuertoPublico(aeropuertosDao.dameMaxIdAeropuertos(), Double.parseDouble(txtFinanciacion.getText()), Integer.parseInt(txtNumTrabajadores.getText()));
         } else {
             aeropuertosPrivadosDao.insertarAeropuertoPrivado(aeropuertosDao.dameMaxIdAeropuertos(), Integer.parseInt(txtSocios.getText()));
         }
@@ -196,7 +196,7 @@ public class M_AddAeropuertoController {
 
     /**
      * Valida los campos del formulario.
-     * @return Una cadena con los errores de validación, o una cadena vacía si todo está correcto.
+     * @return Una cadena con los errores de validación, o una cadena vacía si esta correcto.
      */
     private String validarCampos() {
         StringBuilder errores = new StringBuilder();
