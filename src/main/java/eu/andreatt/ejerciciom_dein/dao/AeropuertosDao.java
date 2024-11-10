@@ -29,7 +29,7 @@ public class AeropuertosDao {
 	public ObservableList<Aeropuertos> cargarAeropuertos() {
 		ObservableList<Aeropuertos> aeropuertos = FXCollections.observableArrayList();
 		try {conexion = new ConexionBD();
-			String consulta = "SELECT id, nombre, anio_inauguracion, capacidad, id_direccion FROM aeropuertos";
+			String consulta = "SELECT id, nombre, anio_inauguracion, capacidad, id_direccion, imagen FROM aeropuertos";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 			ResultSet rs = pstmt.executeQuery();
 
@@ -39,8 +39,9 @@ public class AeropuertosDao {
 				int anio_inauguracion = rs.getInt("anio_inauguracion");
 				int capacidad = rs.getInt("capacidad");
 				int id_direccion = rs.getInt("id_direccion");
+				Blob imagen = rs.getBlob("imagen");
 
-				aeropuertos.add(new Aeropuertos(id, nombre, anio_inauguracion, capacidad, id_direccion));
+				aeropuertos.add(new Aeropuertos(id, nombre, anio_inauguracion, capacidad, id_direccion, imagen));
 			}
 			rs.close();
 			conexion.closeConnection();
@@ -228,25 +229,24 @@ public class AeropuertosDao {
 	/**
 	 * Inserta una imagen para un aeropuerto en la base de datos.
 	 *
-	 * @param ruta La ruta del archivo de imagen.
+	 * @param imagen El objeto Blob que contiene los datos de la imagen.
 	 * @param id El ID del aeropuerto al que se asociará la imagen.
 	 * @return true si la inserción fue exitosa, false en caso contrario.
 	 */
-	public boolean insertarImagen(String ruta, int id) {
+	public boolean insertarImagen(Blob imagen, int id) {
 		try {conexion = new ConexionBD();
-			File file = new File(ruta);
-			byte[] imageData = Files.readAllBytes(file.toPath());
-
+			// Consulta para actualizar la imagen en la base de datos
 			String consulta = "UPDATE aeropuertos SET imagen = ? WHERE id = ?";
-			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
-			pstmt.setBytes(1, imageData);
-			pstmt.setInt(2, id);
+			try (PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta)) {
+				// Establece el parámetro Blob en la consulta
+				pstmt.setBlob(1, imagen);
+				pstmt.setInt(2, id);
 
-			pstmt.executeUpdate();
-			conexion.closeConnection();
-			return true;
-
-		} catch (SQLException | IOException e) {
+				// Ejecuta la consulta de actualización
+				pstmt.executeUpdate();
+				return true;
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;

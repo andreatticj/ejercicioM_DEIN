@@ -1,5 +1,6 @@
 package eu.andreatt.ejerciciom_dein.dao;
 
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class AeropuertosPrivadosDao {
 		ObservableList<InformacionAeropuertosPrivados> aeropuertosPrivados = FXCollections.observableArrayList();
 		try {
 			conexion = new ConexionBD();
-			String consulta = "SELECT a.id, a.nombre, a.anio_inauguracion, a.capacidad, d.pais, d.ciudad, d.calle, d.numero, ap.numero_socios FROM aeropuertos AS a JOIN direcciones AS d ON a.id_direccion = d.id JOIN aeropuertos_privados AS ap ON a.id = ap.id_aeropuerto;";
+			String consulta = "SELECT a.id, a.nombre, a.anio_inauguracion, a.capacidad, d.pais, d.ciudad, d.calle, d.numero, ap.numero_socios, a.imagen FROM aeropuertos AS a JOIN direcciones AS d ON a.id_direccion = d.id JOIN aeropuertos_privados AS ap ON a.id = ap.id_aeropuerto;";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 			ResultSet rs = pstmt.executeQuery();
 
@@ -39,8 +40,9 @@ public class AeropuertosPrivadosDao {
 				String calle = rs.getString("calle");
 				int numero = rs.getInt("numero");
 				int numeroSocios = rs.getInt("numero_socios");
+				Blob imagen = rs.getBlob("imagen");
 
-				aeropuertosPrivados.add(new InformacionAeropuertosPrivados(id, nombre, anioInauguracion, capacidad, pais, ciudad, calle, numero, numeroSocios));
+				aeropuertosPrivados.add(new InformacionAeropuertosPrivados(id, nombre, anioInauguracion, capacidad, pais, ciudad, calle, numero, numeroSocios, imagen));
 			}
 			rs.close();
 			conexion.closeConnection();

@@ -1,5 +1,6 @@
 package eu.andreatt.ejerciciom_dein.dao;
 
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class AeropuertosPublicosDao {
 		ObservableList<InformacionAeropuertosPublicos> aeropuertosPublicos = FXCollections.observableArrayList();
 		try {
 			conexion = new ConexionBD();
-			String consulta = "SELECT a.id, a.nombre, a.anio_inauguracion, a.capacidad, d.pais, d.ciudad, d.calle, d.numero, ap.financiacion, ap.num_trabajadores FROM aeropuertos AS a JOIN direcciones AS d ON a.id_direccion = d.id JOIN aeropuertos_publicos AS ap ON a.id = ap.id_aeropuerto";
+			String consulta = "SELECT a.id, a.nombre, a.anio_inauguracion, a.capacidad, d.pais, d.ciudad, d.calle, d.numero, ap.financiacion, ap.num_trabajadores, a.imagen FROM aeropuertos AS a JOIN direcciones AS d ON a.id_direccion = d.id JOIN aeropuertos_publicos AS ap ON a.id = ap.id_aeropuerto";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 			ResultSet rs = pstmt.executeQuery();
 
@@ -38,10 +39,11 @@ public class AeropuertosPublicosDao {
 				String ciudad = rs.getString("ciudad");
 				String calle = rs.getString("calle");
 				int numero = rs.getInt("numero");
-				float financiacion = rs.getInt("financiacion");
+				double financiacion = rs.getDouble("financiacion");
 				int numTrabajadores = rs.getInt("num_trabajadores");
+				Blob imagen = rs.getBlob("imagen");
 
-				aeropuertosPublicos.add(new InformacionAeropuertosPublicos(id, nombre, anioInauguracion, capacidad, pais, ciudad, calle, numero, financiacion, numTrabajadores));
+				aeropuertosPublicos.add(new InformacionAeropuertosPublicos(id, nombre, anioInauguracion, capacidad, pais, ciudad, calle, numero, financiacion, numTrabajadores, imagen));
 			}
 			rs.close();
 			conexion.closeConnection();
@@ -60,14 +62,14 @@ public class AeropuertosPublicosDao {
 	 * @param numTrabajadores El número de trabajadores del aeropuerto público.
 	 * @return true si la inserción fue exitosa, false en caso contrario.
 	 */
-	public boolean insertarAeropuertoPublico(int idAeropuerto, float financiacion, int numTrabajadores) {
+	public boolean insertarAeropuertoPublico(int idAeropuerto, double financiacion, int numTrabajadores) {
 		try {
 			conexion = new ConexionBD();
 			String consulta = "INSERT INTO aeropuertos_publicos (id_aeropuerto, financiacion, num_trabajadores) VALUES (?, ?, ?)";
 
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 			pstmt.setInt(1, idAeropuerto);
-			pstmt.setFloat(2, financiacion);
+			pstmt.setDouble(2, financiacion);
 			pstmt.setInt(3, numTrabajadores);
 
 			pstmt.executeUpdate();
@@ -117,13 +119,13 @@ public class AeropuertosPublicosDao {
 	 * @param numTrabajadores El nuevo número de trabajadores del aeropuerto público.
 	 * @return true si la actualización fue exitosa, false en caso contrario.
 	 */
-	public boolean actualizarAeropuertoPublico(int idAeropuerto, float financiacion, int numTrabajadores) {
+	public boolean actualizarAeropuertoPublico(int idAeropuerto, double financiacion, int numTrabajadores) {
 		try {
 			conexion = new ConexionBD();
 			String consulta = "UPDATE aeropuertos_publicos SET financiacion = ?, num_trabajadores = ? WHERE id_aeropuerto = ?";
 
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
-			pstmt.setFloat(1, financiacion);
+			pstmt.setDouble(1, financiacion);
 			pstmt.setInt(2, numTrabajadores);
 			pstmt.setInt(3, idAeropuerto);
 

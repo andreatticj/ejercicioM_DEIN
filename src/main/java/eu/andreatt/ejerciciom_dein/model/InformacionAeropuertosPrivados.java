@@ -1,5 +1,6 @@
 package eu.andreatt.ejerciciom_dein.model;
 
+import java.sql.Blob;
 import java.util.Objects;
 
 /**
@@ -36,6 +37,8 @@ public class InformacionAeropuertosPrivados {
 	/** Calle donde se localiza el aeropuerto. */
 	private String calle;
 
+	private Blob imagen;
+
 	/**
 	 * Constructor que inicializa un objeto InformacionAeropuertosPrivados
 	 * con los parámetros proporcionados.
@@ -50,7 +53,7 @@ public class InformacionAeropuertosPrivados {
 	 * @param numero Número específico de la dirección del aeropuerto.
 	 * @param numeroSocios Número de socios que pertenecen al aeropuerto.
 	 */
-	public InformacionAeropuertosPrivados(int id, String nombre, int anioInauguracion, int capacidad, String pais, String ciudad, String calle, int numero, int numeroSocios) {
+	public InformacionAeropuertosPrivados(int id, String nombre, int anioInauguracion, int capacidad, String pais, String ciudad, String calle, int numero, int numeroSocios, Blob imagen) {
 		this.id = id;
 		this.nombre = nombre;
 		this.anioInauguracion = anioInauguracion;
@@ -60,6 +63,7 @@ public class InformacionAeropuertosPrivados {
 		this.pais = pais;
 		this.ciudad = ciudad;
 		this.calle = calle;
+		this.imagen = imagen;
 	}
 
 	/**
@@ -253,5 +257,9 @@ public class InformacionAeropuertosPrivados {
 				&& capacidad == other.capacidad && Objects.equals(ciudad, other.ciudad) && id == other.id
 				&& Objects.equals(nombre, other.nombre) && numero == other.numero && numeroSocios == other.numeroSocios
 				&& Objects.equals(pais, other.pais);
+	}
+
+	public Blob getImagen() {
+		return imagen;
 	}
 }

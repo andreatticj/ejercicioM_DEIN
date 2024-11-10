@@ -1,5 +1,6 @@
 package eu.andreatt.ejerciciom_dein.model;
 
+import java.sql.Blob;
 import java.util.Objects;
 
 /**
@@ -23,21 +24,26 @@ public class Aeropuertos {
 	/** Nombre del aeropuerto. */
 	private String nombre;
 
+	/** Imagen del aeropuertp*/
+	private Blob imagen;
+
 	/**
-	 * Constructor que inicializa un objeto Aeropuertos con los parámetros especificados.
-	 *
-	 * @param id Identificador único del aeropuerto.
-	 * @param nombre Nombre del aeropuerto.
-	 * @param anioInauguracion Año de inauguración del aeropuerto.
-	 * @param capacidad Capacidad máxima del aeropuerto.
-	 * @param id_direccion Identificador de la dirección asociada al aeropuerto.
-	 */
-	public Aeropuertos(int id, String nombre, int anioInauguracion, int capacidad, int id_direccion) {
+     * Constructor que inicializa un objeto Aeropuertos con los parámetros especificados.
+     *
+     * @param id               Identificador único del aeropuerto.
+     * @param nombre           Nombre del aeropuerto.
+     * @param anioInauguracion Año de inauguración del aeropuerto.
+     * @param capacidad        Capacidad máxima del aeropuerto.
+     * @param id_direccion     Identificador de la dirección asociada al aeropuerto.
+     * @param imagen
+     */
+	public Aeropuertos(int id, String nombre, int anioInauguracion, int capacidad, int id_direccion, Blob imagen) {
 		this.id = id;
 		this.nombre = nombre;
 		this.anioInauguracion = anioInauguracion;
 		this.capacidad = capacidad;
 		this.id_direccion = id_direccion;
+		this.imagen = imagen;
 	}
 
 	/**
@@ -128,6 +134,10 @@ public class Aeropuertos {
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Blob getImagen() {
+		return imagen;
 	}
 
 	/**

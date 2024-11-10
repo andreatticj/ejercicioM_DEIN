@@ -13,8 +13,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+
+import java.io.InputStream;
+import java.sql.Blob;
 
 /**
  * Controlador para la lista de aeropuertos.
@@ -300,9 +304,10 @@ public class M_ListadoAeropuertosController {
                 int numSocios = aeropuertoPrivadoSeleccionado.getNumeroSocios();
                 int direccion = direccionesDao.existeDireccion(pais, ciudad, calle, numero);
                 int id = aeropuertoPrivadoSeleccionado.getId();
+                Blob imagen = aeropuertoPrivadoSeleccionado.getImagen();
 
                 // Instanciar ventana de edición para aeropuerto privado
-                M_EditarAeropuerto ventanaEditar = new M_EditarAeropuerto(nombre, pais, ciudad, calle, numero, anioInauguracion, capacidad, false, true, numSocios, 0, 0, direccion, id);
+                M_EditarAeropuerto ventanaEditar = new M_EditarAeropuerto(nombre, pais, ciudad, calle, numero, anioInauguracion, capacidad, false, true, numSocios, 0, 0, direccion, id, imagen);
             } else {
                 // Datos de aeropuerto público
                 String nombre = aeropuertoPublicoSeleccionado.getNombre();
@@ -312,14 +317,17 @@ public class M_ListadoAeropuertosController {
                 int numero = aeropuertoPublicoSeleccionado.getNumero();
                 int anioInauguracion = aeropuertoPublicoSeleccionado.getAnioInauguracion();
                 int capacidad = aeropuertoPublicoSeleccionado.getCapacidad();
-                float financiacion = aeropuertoPublicoSeleccionado.getFinanciacion();
+                double financiacion = aeropuertoPublicoSeleccionado.getFinanciacion();
                 int numTrabajadores = aeropuertoPublicoSeleccionado.getNumTrabajadores();
                 int direccion = direccionesDao.existeDireccion(pais, ciudad, calle, numero);
                 int id = aeropuertoPublicoSeleccionado.getId();
+                Blob imagen = aeropuertoPublicoSeleccionado.getImagen();
 
                 // Instanciar ventana de edición para aeropuerto público
-                M_EditarAeropuerto ventanaEditar = new M_EditarAeropuerto(nombre, pais, ciudad, calle, numero, anioInauguracion, capacidad, true, false, 0, financiacion, numTrabajadores, direccion, id);
+                M_EditarAeropuerto ventanaEditar = new M_EditarAeropuerto(nombre, pais, ciudad, calle, numero, anioInauguracion, capacidad, true, false, 0, financiacion, numTrabajadores, direccion, id, imagen);
             }
+            aeropuertosPrivadosExistentes.setAll(aeropuertosPrivadosDao.cargarAeropuertosPrivados());
+            aeropuertosPublicosExistentes.setAll(aeropuertosPublicosDao.cargarAeropuertosPublicos());
         }
     }
 
@@ -343,7 +351,7 @@ public class M_ListadoAeropuertosController {
             // Declarar variables para almacenar la información del aeropuerto
             String pais, ciudad, calle, nombre;
             int numero, anioInauguracion, capacidad, numSocios = 0, numTrabajadores = 0, id;
-            float financiacion = 0;
+            double financiacion = 0;
 
             // Variables que almacenan la información que se llenará dependiendo de si el aeropuerto es privado o público
             if (aeropuertoPrivadoSeleccionado != null) {
@@ -394,6 +402,7 @@ public class M_ListadoAeropuertosController {
             Alert alerta = generarVentana(Alert.AlertType.INFORMATION, informacion, "INFO");
             alerta.show();
         }
+
     }
 
 
@@ -532,4 +541,6 @@ public class M_ListadoAeropuertosController {
         sortedPublicos.comparatorProperty().bind(tvAeropuertosPublicos.comparatorProperty());
         tvAeropuertosPublicos.setItems(sortedPublicos);
     }
+
+
 }

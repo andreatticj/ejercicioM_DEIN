@@ -1,5 +1,6 @@
 package eu.andreatt.ejerciciom_dein.model;
 
+import java.sql.Blob;
 import java.util.Objects;
 
 /**
@@ -25,7 +26,7 @@ public class InformacionAeropuertosPublicos {
 	private int numTrabajadores;
 
 	/** Monto de financiación asignado al aeropuerto. */
-	private float financiacion;
+	private double financiacion;
 
 	/** Nombre del aeropuerto. */
 	private String nombre;
@@ -38,6 +39,8 @@ public class InformacionAeropuertosPublicos {
 
 	/** Calle donde se localiza el aeropuerto. */
 	private String calle;
+
+	private Blob imagen;
 
 	/**
 	 * Constructor que inicializa un objeto InformacionAeropuertosPublicos
@@ -54,7 +57,7 @@ public class InformacionAeropuertosPublicos {
 	 * @param financiacion Monto de financiación asignado al aeropuerto.
 	 * @param numTrabajadores Número de trabajadores que operan en el aeropuerto.
 	 */
-	public InformacionAeropuertosPublicos(int id, String nombre, int anioInauguracion, int capacidad, String pais, String ciudad, String calle, int numero, float financiacion, int numTrabajadores) {
+	public InformacionAeropuertosPublicos(int id, String nombre, int anioInauguracion, int capacidad, String pais, String ciudad, String calle, int numero, double financiacion, int numTrabajadores, Blob imagen) {
 		this.id = id;
 		this.nombre = nombre;
 		this.anioInauguracion = anioInauguracion;
@@ -65,6 +68,7 @@ public class InformacionAeropuertosPublicos {
 		this.numero = numero;
 		this.financiacion = financiacion;
 		this.numTrabajadores = numTrabajadores;
+		this.imagen = imagen;
 	}
 
 	/**
@@ -162,7 +166,7 @@ public class InformacionAeropuertosPublicos {
 	 *
 	 * @return financiacion El monto de financiación asignado al aeropuerto.
 	 */
-	public float getFinanciacion() {
+	public double getFinanciacion() {
 		return financiacion;
 	}
 
@@ -274,8 +278,12 @@ public class InformacionAeropuertosPublicos {
 		InformacionAeropuertosPublicos other = (InformacionAeropuertosPublicos) obj;
 		return anioInauguracion == other.anioInauguracion && Objects.equals(calle, other.calle)
 				&& capacidad == other.capacidad && Objects.equals(ciudad, other.ciudad)
-				&& Float.floatToIntBits(financiacion) == Float.floatToIntBits(other.financiacion) && id == other.id
+				&& Double.doubleToLongBits(financiacion) == Double.doubleToLongBits(other.financiacion) && id == other.id
 				&& Objects.equals(nombre, other.nombre) && numTrabajadores == other.numTrabajadores
 				&& numero == other.numero && Objects.equals(pais, other.pais);
+	}
+
+	public Blob getImagen() {
+		return imagen;
 	}
 }
