@@ -313,6 +313,15 @@ public class M_EditAeropuertoController {
         this.idAeropuerto = idAeropuerto;
     }
 
+    public void setImagen(Blob imagen) {
+        this.imagen = imagen;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+
     /**
      * Establece el radio de Aeropuerto Privado como seleccionado
      * y ajusta la visibilidad de los componentes relacionados.

@@ -61,14 +61,15 @@ public class AeropuertosDao {
 	 * @param idDireccion El ID de la dirección asociada al aeropuerto.
 	 * @return true si la inserción fue exitosa, false en caso contrario.
 	 */
-	public boolean insertarAeropuerto(String nombre, int anioInauguracion, int capacidad, int idDireccion) {
+	public boolean insertarAeropuerto(String nombre, int anioInauguracion, int capacidad, int idDireccion, Blob imagen) {
 		try {conexion = new ConexionBD();
-			String consulta = "INSERT INTO aeropuertos (nombre, anio_inauguracion, capacidad, id_direccion) VALUES (?, ?, ?, ?)";
+			String consulta = "INSERT INTO aeropuertos (nombre, anio_inauguracion, capacidad, id_direccion, imagen) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
 			pstmt.setString(1, nombre);
 			pstmt.setInt(2, anioInauguracion);
 			pstmt.setInt(3, capacidad);
 			pstmt.setInt(4, idDireccion);
+			pstmt.setBlob(5, imagen);
 
 			pstmt.executeUpdate();
 			conexion.closeConnection();

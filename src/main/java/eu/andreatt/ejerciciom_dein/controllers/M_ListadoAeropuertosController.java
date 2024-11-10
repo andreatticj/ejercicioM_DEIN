@@ -182,6 +182,8 @@ public class M_ListadoAeropuertosController {
     @FXML
     void aniadirAeropuerto(ActionEvent event) {
         new M_AddAeropuerto();
+        aeropuertosPrivadosExistentes.setAll(aeropuertosPrivadosDao.cargarAeropuertosPrivados());
+        aeropuertosPublicosExistentes.setAll(aeropuertosPublicosDao.cargarAeropuertosPublicos());
     }
 
     /**
@@ -258,6 +260,8 @@ public class M_ListadoAeropuertosController {
                 alerta.show();
             }
         }
+        aeropuertosPrivadosExistentes.setAll(aeropuertosPrivadosDao.cargarAeropuertosPrivados());
+        aeropuertosPublicosExistentes.setAll(aeropuertosPublicosDao.cargarAeropuertosPublicos());
     }
 
     /**

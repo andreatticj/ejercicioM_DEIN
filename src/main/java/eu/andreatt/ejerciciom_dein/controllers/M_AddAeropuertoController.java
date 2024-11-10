@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.sql.Blob;
+
 import javafx.scene.image.Image;
 
 /**
@@ -72,7 +74,7 @@ public class M_AddAeropuertoController {
     private AeropuertosPrivadosDao aeropuertosPrivadosDao;
     private AeropuertosPublicosDao aeropuertosPublicosDao;
 
-    private String ruta;
+    private Blob imagen = null;
 
     /**
      * Muestra u oculta los campos dependiendo del tipo de aeropuerto (privado o público).
@@ -147,8 +149,8 @@ public class M_AddAeropuertoController {
         }
 
         // Insertar el aeropuerto
-        aeropuertosDao.insertarAeropuerto(txtNombre.getText(), Integer.parseInt(txtAnioInaguracion.getText()), Integer.parseInt(txtCapaciad.getText()), direccionId);
-        aeropuertosDao.insertarImagen(, direccionId);
+        aeropuertosDao.insertarAeropuerto(txtNombre.getText(), Integer.parseInt(txtAnioInaguracion.getText()), Integer.parseInt(txtCapaciad.getText()), direccionId, imagen);
+        //aeropuertosDao.insertarImagen(, direccionId);
 
         // Insertar según el tipo de aeropuerto
         if (rbPublico.isSelected()) {
@@ -185,7 +187,8 @@ public class M_AddAeropuertoController {
                     alerta.show();
                 } else {
                     Image image = new Image(archivoSeleccionado.toURI().toString());
-                    ruta = archivoSeleccionado.getAbsolutePath();
+                    aeropuertosDao = new AeropuertosDao();
+                    imagen = aeropuertosDao.convertFileToBlob(archivoSeleccionado);
                     imageView.setImage(image); // Mostrar la imagen seleccionada
                 }
             } catch (IOException e) {

@@ -3,12 +3,14 @@ package eu.andreatt.ejerciciom_dein.application;
 import eu.andreatt.ejerciciom_dein.controllers.M_EditAeropuertoController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.sql.Blob;
+import java.sql.SQLException;
 
 /**
  * La clase M_EditarAeropuerto representa una ventana para editar la información
@@ -66,6 +68,19 @@ public class M_EditarAeropuerto extends Stage {
             controller.setTextFieldNumTrabajadores(String.valueOf(numTrabajadores));
             controller.setIdDireccion(idDireccion);
             controller.setIdAeropuerto(idAeropuerto);
+            if (imagen!=null){
+                try {
+                    controller.getImageView().setImage(new Image(imagen.getBinaryStream()));
+                }catch (SQLException e){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error al cargar la imagen");
+                    alert.setHeaderText("No se pudo cargar la imagen desde la base de datos.");
+                    alert.setContentText("Ha ocurrido un error al intentar recuperar la imagen del aeropuerto. Detalles: " + e.getMessage());
+
+                    // Mostrar la alerta
+                    alert.showAndWait();
+                }
+            }
 
             // Configuración de visibilidad según el tipo de aeropuerto
             if (controller.isPrivadoSelected()) {
