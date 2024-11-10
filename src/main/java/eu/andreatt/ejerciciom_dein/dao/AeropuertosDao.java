@@ -1,9 +1,11 @@
 package eu.andreatt.ejerciciom_dein.dao;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -272,5 +274,41 @@ public class AeropuertosDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * Convierte un archivo en un Blob para poder almacenarlo en la base de datos.
+	 * @param file El archivo a convertir en Blob.
+	 * @return El Blob que representa el archivo; null si ocurre un error. */
+	public java.sql.Blob convertFileToBlob(File file) {
+		Blob blob = null;
+
+		try {
+			conexion = new ConexionBD(); // Establece la conexión a la base de datos
+
+			// Crear el Blob
+			blob = conexion.getConexion().createBlob();
+
+			// Escribir los bytes del archivo en el Blob
+			try (FileInputStream inputStream = new FileInputStream(file);
+				 var outputStream = blob.setBinaryStream(1)) {
+
+				byte[] buffer = new byte[1024];
+				int bytesRead;
+
+				// Lee el archivo y escribe en el Blob
+				while ((bytesRead = inputStream.read(buffer)) != -1) {
+					outputStream.write(buffer, 0, bytesRead);
+				}
+			}
+
+			conexion.closeConnection(); // Cierra la conexión a la base de datos
+		} catch (SQLException e) {
+			System.err.println("Error de SQL: " + e.getMessage()); // Manejo de errores de SQL
+		} catch (IOException e) {
+			System.err.println("Error de IO: " + e.getMessage()); // Manejo de errores de IO
+		}
+
+		return blob; // Devuelve el Blob creado
 	}
 }

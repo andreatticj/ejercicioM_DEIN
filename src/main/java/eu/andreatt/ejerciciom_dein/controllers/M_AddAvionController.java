@@ -43,6 +43,19 @@ public class M_AddAvionController {
 
     private ObservableList<Aeropuertos> elementosCombo;
 
+    /** Metodo de inicialización de los componentes */
+    @FXML
+    public void initialize() {
+        aeropuertosDao = new AeropuertosDao();
+        avionesDao = new AvionesDao();
+
+        //Cargar combo
+        elementosCombo = aeropuertosDao.cargarAeropuertos();
+        cmbAeropuerto.setItems(elementosCombo);
+        cmbAeropuerto.setValue(elementosCombo.get(0));
+
+    }
+
     /**
      * Maneja la acción de cancelar y cierra la ventana modal.
      *
@@ -178,4 +191,6 @@ public class M_AddAvionController {
         rbDesactivado.setSelected(false);
         cmbAeropuerto.setValue(elementosCombo.get(0));
     }
+
+
 }

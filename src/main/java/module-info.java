@@ -2,6 +2,8 @@ module eu.andreatt.ejerciciom_dein {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires java.desktop;
+    requires javafx.swing;
 
 
     opens eu.andreatt.ejerciciom_dein.controllers to javafx.fxml;

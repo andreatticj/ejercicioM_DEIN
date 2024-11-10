@@ -13,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Controlador para la lista de aeropuertos.
@@ -321,22 +323,16 @@ public class M_ListadoAeropuertosController {
         }
     }
 
-    /**
-     * Muestra información detallada del aeropuerto seleccionado en las tablas
-     * de aeropuertos privados o públicos. Si no se selecciona ningún aeropuerto,
-     * se genera una alerta de error. Si se selecciona un aeropuerto, se
-     * recopila información sobre su ubicación, año de inauguración, capacidad,
-     * y los aviones asociados, presentando la información en una alerta.
-     *
-     * @param event El evento de acción que se produce al invocar este método.
-     */
     @FXML
     void mostrarAeropuerto(ActionEvent event) {
+        // Aquí se maneja el evento del menú o botones
+        mostrarInformacionDelAeropuerto();
+    }
 
+    @FXML
+    private void mostrarInformacionDelAeropuerto() {
         // Verificar si se seleccionó una fila en la tabla de aeropuertos privados
         InformacionAeropuertosPrivados aeropuertoPrivadoSeleccionado = tvAeropuertosPrivados.getSelectionModel().getSelectedItem();
-
-        // Verificar si se seleccionó una fila en la tabla de aeropuertos públicos
         InformacionAeropuertosPublicos aeropuertoPublicoSeleccionado = tvAeropuertosPublicos.getSelectionModel().getSelectedItem();
 
         // Validar que se ha seleccionado un aeropuerto
@@ -344,12 +340,12 @@ public class M_ListadoAeropuertosController {
             Alert alerta = generarVentana(Alert.AlertType.ERROR, "No se ha seleccionado ningún aeropuerto", "ERROR");
             alerta.show();
         } else {
-            // Declarar variables
+            // Declarar variables para almacenar la información del aeropuerto
             String pais, ciudad, calle, nombre;
             int numero, anioInauguracion, capacidad, numSocios = 0, numTrabajadores = 0, id;
             float financiacion = 0;
 
-            // Cargar variables
+            // Variables que almacenan la información que se llenará dependiendo de si el aeropuerto es privado o público
             if (aeropuertoPrivadoSeleccionado != null) {
                 pais = aeropuertoPrivadoSeleccionado.getPais();
                 ciudad = aeropuertoPrivadoSeleccionado.getCiudad();
@@ -373,10 +369,10 @@ public class M_ListadoAeropuertosController {
                 id = aeropuertoPublicoSeleccionado.getId();
             }
 
-            // Generar información dirección y aeropuertos
+            // Generar la cadena con la información del aeropuerto
             String informacion = "Nombre: " + nombre + "\nPaís: " + pais + "\nDirección: C/" + calle + " " + numero + ", " + ciudad + "\nAño de inauguración: " + anioInauguracion + "\nCapacidad: " + capacidad + "\nAviones:\n";
 
-            // Generar información aviones
+            // Obtener la lista de aviones asociados al aeropuerto
             ObservableList<Aviones> aviones = avionesDao.dameAvionesPorAeropuerto(id);
             if (aviones.size() == 0) {
                 informacion += "\tNO TIENE AVIONES\n";
@@ -387,17 +383,20 @@ public class M_ListadoAeropuertosController {
                 }
             }
 
-            // Generar información público o privado
+            // Añadir información específica sobre si el aeropuerto es público o privado
             if (aeropuertoPrivadoSeleccionado == null) {
                 informacion += "Público\nFinanciación: " + financiacion + "\nNúmero de trabajadores: " + numTrabajadores;
             } else {
                 informacion += "Privado\nNúmero de Socios: " + numSocios;
             }
 
+            // Mostrar la información en una ventana de alerta
             Alert alerta = generarVentana(Alert.AlertType.INFORMATION, informacion, "INFO");
             alerta.show();
         }
     }
+
+
 
     /**
      * Genera una ventana de alerta con el tipo de alerta, mensaje y título especificados.
@@ -439,6 +438,20 @@ public class M_ListadoAeropuertosController {
 
         // Llamar al método de configuración
         configurarTablasYFiltrado();
+
+        tvAeropuertosPrivados.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY) {
+                mostrarInformacionDelAeropuerto();
+            }
+        });
+
+        // Asignar el evento de doble clic a la tabla de aeropuertos públicos
+        tvAeropuertosPublicos.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY) {
+                mostrarInformacionDelAeropuerto();
+            }
+        });
+
     }
 
     private void configurarTablasYFiltrado() {

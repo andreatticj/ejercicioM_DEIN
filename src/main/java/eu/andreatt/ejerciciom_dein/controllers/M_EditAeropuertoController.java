@@ -7,7 +7,18 @@ import eu.andreatt.ejerciciom_dein.dao.DireccionesDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.embed.swing.SwingFXUtils;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 
 public class M_EditAeropuertoController {
 
@@ -16,6 +27,9 @@ public class M_EditAeropuertoController {
 
     @FXML
     private Button btnGuardar;
+
+    @FXML
+    private Button btnImagen;
 
     @FXML
     private Label lblFinanciacion;
@@ -34,6 +48,9 @@ public class M_EditAeropuertoController {
 
     @FXML
     private RadioButton rbPublico;
+
+    @FXML
+    private ImageView imageView;
 
     @FXML
     private TextField txtAnioInaguracion;
@@ -77,6 +94,8 @@ public class M_EditAeropuertoController {
     private DireccionesDao direccionesDao;
     private AeropuertosPrivadosDao aeropuertosPrivadosDao;
     private AeropuertosPublicosDao aeropuertosPublicosDao;
+    /** Imagen del animal en formato Blob. */
+    private Blob imagen;
 
     /**
      * Inicializa la carga de datos y los objetos DAO necesarios.
@@ -332,4 +351,58 @@ public class M_EditAeropuertoController {
         alerta.setContentText(mensaje);
         return alerta;
     }
+
+    /**
+     * Acción que se ejecuta cuando el usuario selecciona una imagen para el animal. Permite cargar una imagen desde
+     * el sistema de archivos y mostrarla en el {@link ImageView}.
+     *
+     * @param event El evento de acción generado por el usuario.
+     */
+    @FXML
+    void actionImagen(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de imagen", "*.png", "*.jpg", "*.gif"));
+
+        // Muestra un cuadro de diálogo para seleccionar un archivo de imagen.
+        File archivo = fileChooser.showOpenDialog(btnImagen.getScene().getWindow());
+
+        if (!esTamanoValido(archivo)) {
+            Alert alerta = generarVentana(Alert.AlertType.ERROR, "La imagen no puede tener un tamaño mayor a 64kb", "ERROR");
+            alerta.show();
+            return;
+        }
+
+        if (archivo != null) {
+            try {
+
+                // Intentar convertir el archivo a un Blob
+                Blob blob = aeropuertosDao.convertFileToBlob(archivo);
+                this.imagen = blob; // Asignar el Blob a la variable de instancia
+
+                // Abrir un InputStream para la imagen y establecerla en el ImageView
+                try (InputStream imagenStream = new FileInputStream(archivo)) {
+                    imageView.setImage(new Image(imagenStream));
+                }
+            }  catch (IOException e) {
+                // Muestra una alerta en caso de error al cargar la imagen.
+                generarVentana(Alert.AlertType.ERROR, "Error al cargar la imagen: " + e.getMessage(), "ERROR").show();
+            }
+
+            try {
+                // Convierte la imagen seleccionada en un formato adecuado para el ImageView.
+                BufferedImage bufferedImage = ImageIO.read(archivo);
+                Image imagenFX = SwingFXUtils.toFXImage(bufferedImage, null);
+                imageView.setImage(imagenFX);
+            } catch (IOException e) {
+                // Muestra una alerta en caso de error al cargar la imagen.
+                generarVentana(Alert.AlertType.ERROR, "Error al cargar la imagen: " + e.getMessage(), "ERROR").show();
+            }
+        }
+    }
+
+    private boolean esTamanoValido(File file) {
+        double kbs = (double) file.length() / 1024;
+        return kbs <= 64; // Tamaño máximo de 64 KB
+    }
+
 }
